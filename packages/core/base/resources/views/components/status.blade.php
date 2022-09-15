@@ -1,0 +1,1 @@
+<span class="m-badge m-badge--{{$type}} m-badge--wide">{{$title}}</span>

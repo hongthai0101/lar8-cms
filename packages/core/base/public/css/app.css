@@ -1,0 +1,21 @@
+.preview-image-wrapper .btn_remove_image {
+  cursor: pointer;
+  background: #ddd;
+  border-radius: 50% !important;
+  color: #000;
+  display: inline-block;
+  font-size: 17px;
+  height: 25px;
+  text-align: center;
+  width: 25px;
+  position: absolute;
+  top: unset;
+}
+
+.m-list-search__result-item-pic .m--img-rounded {
+  max-width: 50px;
+}
+
+.core-custom-form .m-portlet .m-portlet__head {
+  height: 3.2rem;
+}

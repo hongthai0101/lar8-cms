@@ -1,0 +1,108 @@
+.dataTables_wrapper .dataTables_processing {
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.btn-filter-cancel {
+  color: #337ab7 !important;
+  font-weight: normal !important;
+}
+
+table .btn:not(.btn-sm):not(.btn-lg) {
+  line-height: 1;
+  padding: 5px 8px;
+}
+
+table th.text-center:last-child {
+  vertical-align: middle;
+  padding-top: 10px;
+}
+
+#filter-navigation .btn-group .action-filter.active {
+  color: #333;
+}
+
+#filter-navigation .btn-group .action-filter.active:hover {
+  text-decoration: none;
+}
+
+.dataTables_paginate {
+  width: 200px;
+}
+
+.dataTables_paginate .pagination-panel {
+  text-align: left;
+}
+
+.dataTables_paginate .pagination-panel .pagination-panel-input {
+  display: inline-block;
+  width: 30%;
+}
+
+.table-group-actions > select {
+  float: left;
+  width: 58%;
+  margin-right: 10px;
+}
+.table-group-actions > button {
+  float: left;
+}
+.table-group-actions ul li {
+  list-style: none;
+}
+
+.table-container .font-green-jungle {
+  color: #26C281 !important;
+}
+.table-container .btn-filter-cancel {
+  color: #fff !important;
+  padding: 11px !important;
+}
+.table-container .m-radio > input, .table-container .m-checkbox > input {
+  right: 10px;
+  cursor: pointer;
+  z-index: 100;
+  width: 20px;
+  height: 20px;
+}
+.table-container .table-group-actions {
+  display: flex;
+}
+
+.dataTables_wrapper table.dataTable .filter .sorting_asc {
+  background: none;
+}
+
+/** vulh fix checkbox indeterminate issue (select all) */
+.fomo-checkbox.m-checkbox input[name=select_all] {
+  width: 20px !important;
+  height: 13px !important;
+}
+
+.fomo-checkbox.m-checkbox input[name=select_all] {
+  z-index: 1 !important;
+  opacity: 1 !important;
+}
+
+.rows-actions {
+  min-width: 100px;
+}
+
+.confirmation-modal .modal-dialog, .confirmation-ajax-modal .modal-dialog {
+  max-width: 30%;
+  width: auto;
+}
+
+.tbl-hidden {
+  display: none !important;
+}
+
+.m-tabs-line.nav.nav-tabs .nav-link, .m-tabs-line a.m-tabs__link {
+  cursor: pointer;
+}
+
+.modal.show .modal-dialog .modal-header > .close {
+  position: absolute;
+  right: 30px;
+}

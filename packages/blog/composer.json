@@ -1,0 +1,24 @@
+{
+    "name": "messi/blog",
+    "autoload": {
+        "psr-4": {
+            "Messi\\Blog\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ThaiLe",
+            "email": "thailh@vietmoney.vn"
+        }
+    ],
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Messi\\Blog\\Providers\\BlogServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

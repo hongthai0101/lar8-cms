@@ -1,0 +1,37 @@
+@media only screen and (max-width: 1250px)  {
+  .rv-media-main-wrapper{
+    .rv-media-top-header {
+      display: block !important;
+      .rv-media-actions {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+.media-modal {
+  .modal-full {
+    max-width: 1200px !important;
+    margin: auto !important;
+  }
+}
+
+.rv-media-container {
+  .rv-modals {
+    .modal-title {
+      color: white !important;
+    }
+    .modal-body{
+      .rv-btn-add-folder {
+        width: auto;
+      }
+    }
+  }
+
+  .rv-media-main-wrapper {
+    .js-rv-media-change-filter {
+      font-size: 12px;
+    }
+  }
+
+}

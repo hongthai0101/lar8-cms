@@ -1,0 +1,15 @@
+.preview-image-wrapper {
+  .btn_remove_image {
+    cursor: pointer;
+    background: #ddd;
+    border-radius: 50%!important;
+    color: #000;
+    display: inline-block;
+    font-size: 17px;
+    height: 25px;
+    text-align: center;
+    width: 25px;
+    position: absolute;
+    top: unset;
+  }
+}
