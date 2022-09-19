@@ -227,7 +227,7 @@ abstract class FormAbstract extends Form
             'html'         => HtmlField::class,
             'repeater'     => RepeaterField::class,
             'tinymce'      => TinyMceField::class,
-            'iCheckbox'      => ICheckboxField::class
+            'iCheckbox'    => ICheckboxField::class
         ];
 
         foreach ($customFields as $key => $field) {

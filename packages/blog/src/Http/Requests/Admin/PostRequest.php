@@ -12,15 +12,16 @@ class PostRequest extends BaseRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'title'            => 'required|max:60|min:2',
             'description'      => 'nullable|string|min:1|max:255',
-            'keywords'         => 'nullable|string|min:1|max:255',
             'thumbnail'        => 'nullable|string',
             'content'          => 'required|string|min:1',
-            'status'   => 'required|in:' . implode(',', array_keys(MasterData::statuses()))
+            'status'           => 'required|in:' . implode(',', array_keys(MasterData::statuses())),
+            'categories'       => 'required',
+            'tags'             => 'required'
         ];
     }
 }

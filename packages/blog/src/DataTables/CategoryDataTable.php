@@ -18,7 +18,7 @@ class CategoryDataTable extends DataTableAbstract
      * @param Builder $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable($query)
+    public function dataTable($query): \Yajra\DataTables\DataTableAbstract
     {
         return datatables()
             ->eloquent($query)
