@@ -7,7 +7,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
 
 class SettingRepositoryEloquent extends BaseRepository implements SettingRepository
 {
-    public function model()
+    public function model(): string
     {
         return Setting::class;
     }

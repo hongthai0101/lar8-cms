@@ -2,7 +2,6 @@
 
 namespace Messi\Base\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -23,7 +22,7 @@ class Slug extends Model
     /**
      * @return BelongsTo
      */
-    public function reference()
+    public function reference(): BelongsTo
     {
         return $this->morphTo();
     }

@@ -7,7 +7,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
 
 class UserRepositoryEloquent extends BaseRepository implements UserRepository
 {
-    public function model()
+    public function model(): string
     {
         return User::class;
     }

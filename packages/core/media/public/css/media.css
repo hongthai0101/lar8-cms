@@ -1214,7 +1214,7 @@ html {
   }
 }
 .context-menu-list {
-  z-index: 21 !important;
+  z-index: 210 !important;
 }
 
 .media-modal-body {

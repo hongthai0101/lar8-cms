@@ -11,10 +11,8 @@
         "guzzlehttp/guzzle": "^7.5",
         "laravel/framework": "^9.11",
         "laravel/tinker": "^2.7",
-        "league/flysystem": "^3.5",
         "messi/blog": "dev-main",
-        "messi/core": "dev-main",
-        "spatie/laravel-sluggable": "^3.4"
+        "messi/core": "dev-main"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

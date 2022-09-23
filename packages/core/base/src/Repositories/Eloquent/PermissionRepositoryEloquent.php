@@ -7,7 +7,7 @@ use Yajra\Acl\Models\Permission;
 
 class PermissionRepositoryEloquent extends BaseRepository implements PermissionRepository
 {
-    public function model()
+    public function model(): string
     {
         return Permission::class;
     }

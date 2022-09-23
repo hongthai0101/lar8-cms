@@ -7,7 +7,7 @@ use Yajra\Acl\Models\Role;
 
 class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
 {
-    public function model()
+    public function model(): string
     {
         return Role::class;
     }

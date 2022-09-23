@@ -64,9 +64,9 @@ export class Helpers {
     };
 
     static getRequestParams() {
-        if (window.__Media.options && window.__Media.options.open_in === 'modal') {
-            return $.extend(true, MediaConfig.request_params, window.__Media.options || {});
-        }
+        // if (window.__Media.options && window.__Media.options.open_in === 'modal') {
+        //     return $.extend(true, MediaConfig.request_params, window.__Media.options || {});
+        // }
         return MediaConfig.request_params;
     }
 

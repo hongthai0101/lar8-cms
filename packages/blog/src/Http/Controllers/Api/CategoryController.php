@@ -9,7 +9,6 @@ use Messi\Blog\Http\Collections\CategoryCollection;
 use Messi\Blog\Http\Requests\Api\CategoryRequest;
 use Messi\Blog\Http\Resources\CategoryResource;
 use Messi\Blog\Repositories\Contracts\CategoryRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
 
 class CategoryController extends ApiController
 {
@@ -85,7 +84,6 @@ class CategoryController extends ApiController
      */
     public function index(Request $request): CategoryCollection
     {
-        $this->repository->pushCriteria(app(RequestCriteria::class));
         $items = $this->repository->paginate();
         return new CategoryCollection($items);
     }
@@ -122,7 +120,6 @@ class CategoryController extends ApiController
      */
     public function show(int $id): CategoryResource
     {
-        $this->repository->pushCriteria(app(RequestCriteria::class));
         $item = $this->repository->find($id);
         return new CategoryResource($item);
     }

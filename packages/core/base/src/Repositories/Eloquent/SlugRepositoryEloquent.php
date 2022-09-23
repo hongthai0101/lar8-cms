@@ -7,7 +7,7 @@ use Messi\Base\Repositories\Contracts\SlugRepository;
 
 class SlugRepositoryEloquent extends BaseRepository implements SlugRepository
 {
-    public function model()
+    public function model(): string
     {
         return Slug::class;
     }
