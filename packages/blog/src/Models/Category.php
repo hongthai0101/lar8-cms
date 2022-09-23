@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Messi\Base\Models\BaseModel;
+use Messi\Base\Models\User;
 use Messi\Base\Traits\ModelTrait;
 use Messi\Base\Traits\MetaBox;
 use Messi\Base\Traits\Sluggable;
@@ -44,7 +45,7 @@ class Category extends BaseModel
      */
     public function posts(): BelongsToMany
     {
-        return $this->belongsToMany(Post::class, 'post_categories')->with('slugable');
+        return $this->belongsToMany(Post::class, 'post_categories');
     }
 
     /**
@@ -52,7 +53,7 @@ class Category extends BaseModel
      */
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'parent_id')->withDefault();
+        return $this->belongsTo(Category::class, 'parent_id', 'id');
     }
 
     /**
@@ -61,5 +62,21 @@ class Category extends BaseModel
     public function children(): HasMany
     {
         return $this->hasMany(Category::class, 'parent_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_id', 'id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function updatedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_id', 'id');
     }
 }

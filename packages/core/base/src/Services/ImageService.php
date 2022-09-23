@@ -8,10 +8,9 @@ class ImageService
     /**
      * @param $image
      * @param string $pathInput
-     * @param bool $thumbnail
-     * @return array|bool
+     * @return bool|array|string
      */
-    public function base64($image, $pathInput = '')
+    public function base64($image,string $pathInput = ''): bool|array|string
     {
         try{
             $this->createFolder($pathInput);

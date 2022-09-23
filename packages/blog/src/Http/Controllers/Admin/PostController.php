@@ -22,7 +22,7 @@ class PostController extends BaseController
     /**
      * @var PostRepository
      */
-    private $repository;
+    private PostRepository $repository;
 
     /**
      * PostController constructor.

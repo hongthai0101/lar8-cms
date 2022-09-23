@@ -3,6 +3,8 @@
 namespace Messi\Blog\Providers;
 
 
+use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 use Messi\Base\Traits\LoadPublishServiceTrait;
 use Messi\Blog\Http\ViewComposers\SidebarViewComposer;
@@ -15,10 +17,10 @@ class BlogServiceProvider extends ServiceProvider
     /**
      * @var bool
      */
-    protected $defer = true;
+    protected bool $defer = true;
 
     /**
-     * @throws \Exception | BindingResolutionException
+     * @throws Exception
      */
     public function register()
     {
@@ -26,14 +28,14 @@ class BlogServiceProvider extends ServiceProvider
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function boot()
     {
         $this->setNamespace('blog')
             ->loadPublishViews()
             ->loadMigrations()
-            ->loadRoutes();
+            ->loadRoutes(['web', 'api']);
 
         View::composer(
             'core/base::layouts.partials.sidebar', SidebarViewComposer::class

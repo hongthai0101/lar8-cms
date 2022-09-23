@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Http\UploadedFile;
+use League\Flysystem\FilesystemException;
 use Mimey\MimeTypes;
 use Media;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,7 @@ class UploadsManager
     /**
      * @var MimeTypes
      */
-    protected $mimeType;
+    protected MimeTypes $mimeType;
 
     /**
      * UploadsManager constructor.
@@ -50,7 +51,7 @@ class UploadsManager
      * @param string $path
      * @return mixed|null|string
      */
-    public function fileMimeType(string $path): ?string
+    public function fileMimeType(string $path): mixed
     {
         return $this->mimeType->getMimeType(File::extension(Media::getRealPath($path)));
     }
@@ -81,7 +82,7 @@ class UploadsManager
      * @param string $folder
      * @return array|bool|Translator|string|null
      */
-    public function createDirectory(string $folder)
+    public function createDirectory(string $folder): array|bool|Translator|string|null
     {
         $folder = $this->cleanFolder($folder);
 
@@ -107,7 +108,7 @@ class UploadsManager
      * @param string $folder
      * @return array|bool|Translator|string|null
      */
-    public function deleteDirectory(string $folder)
+    public function deleteDirectory(string $folder):  array|bool|Translator|string|null
     {
         $folder = $this->cleanFolder($folder);
 
@@ -136,6 +137,7 @@ class UploadsManager
      * @param string $content
      * @param UploadedFile|null $file
      * @return bool
+     * @throws FilesystemException
      */
     public function saveFile(string $path, string $content, UploadedFile $file = null): bool
     {

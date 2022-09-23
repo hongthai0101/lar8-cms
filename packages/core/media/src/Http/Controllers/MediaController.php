@@ -32,22 +32,22 @@ class MediaController extends Controller
     /**
      * @var MediaFileInterface
      */
-    protected $fileRepository;
+    protected MediaFileInterface $fileRepository;
 
     /**
      * @var MediaFolderInterface
      */
-    protected $folderRepository;
+    protected MediaFolderInterface $folderRepository;
 
     /**
      * @var UploadsManager
      */
-    protected $uploadManager;
+    protected UploadsManager $uploadManager;
 
     /**
      * @var MediaSettingInterface
      */
-    protected $mediaSettingRepository;
+    protected MediaSettingInterface $mediaSettingRepository;
 
     /**
      * MediaController constructor.
@@ -72,7 +72,7 @@ class MediaController extends Controller
      * @param Request $request
      * @return string
      */
-    public function getMedia(Request $request)
+    public function getMedia(Request $request): string
     {
         if ($request->input('media-action') === 'select-files') {
             return view('core/media::popup');
@@ -84,7 +84,7 @@ class MediaController extends Controller
      * @return string
      * @throws Throwable
      */
-    public function getPopup()
+    public function getPopup(): string
     {
         return view('core/media::popup')->render();
     }
@@ -95,7 +95,7 @@ class MediaController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function getList(Request $request)
+    public function getList(Request $request): JsonResponse
     {
         $files = [];
         $folders = [];

@@ -25,7 +25,7 @@ class MediaFileController extends Controller
     /**
      * @var MediaFileInterface
      */
-    protected $fileRepository;
+    protected MediaFileInterface $fileRepository;
 
     /**
      * @param MediaFileInterface $fileRepository
@@ -39,7 +39,7 @@ class MediaFileController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function postUpload(Request $request)
+    public function postUpload(Request $request): JsonResponse
     {
         if (!config('core.media.media.chunk.enabled')) {
             $result = Media::handleUpload(Arr::first($request->file('file')), $request->input('folder_id', 0));
@@ -78,7 +78,7 @@ class MediaFileController extends Controller
      * @param array $result
      * @return JsonResponse
      */
-    protected function handleUploadResponse(array $result)
+    protected function handleUploadResponse(array $result): JsonResponse
     {
         if ($result['error'] == false) {
             return Media::responseSuccess([
@@ -94,7 +94,7 @@ class MediaFileController extends Controller
      * @param Request $request
      * @return ResponseFactory|JsonResponse|Response
      */
-    public function postUploadFromEditor(Request $request)
+    public function postUploadFromEditor(Request $request): Response|JsonResponse|ResponseFactory
     {
         return Media::uploadFromEditor($request);
     }
@@ -103,7 +103,7 @@ class MediaFileController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function postDownloadUrl(Request $request)
+    public function postDownloadUrl(Request $request): mixed
     {
         $validator = Validator::make($request->input(), [
             'url' => 'required',

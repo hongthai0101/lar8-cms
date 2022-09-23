@@ -2,6 +2,7 @@
 
 namespace Messi\Media\Repositories\Eloquent;
 
+use Illuminate\Database\Eloquent\Collection;
 use Messi\Base\Repositories\BaseRepository;
 use Messi\Media\Models\MediaFile;
 use Messi\Media\Repositories\Interfaces\MediaFileInterface;
@@ -15,6 +16,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Media;
+use Prettus\Repository\Exceptions\RepositoryException;
 
 /**
  * @since 19/08/2015 07:45 AM
@@ -70,7 +72,12 @@ class MediaFileRepository extends BaseRepository implements MediaFileInterface
     /**
      * {@inheritDoc}
      */
-    public function getFilesByFolderId($folderId, array $params = [], $withFolders = true, $folderParams = [])
+    public function getFilesByFolderId(
+        int $folderId,
+        array $params = [],
+        bool $withFolders = true,
+        $folderParams = []
+    ): mixed
     {
         $params = array_merge([
             'order_by'         => [
@@ -204,8 +211,8 @@ class MediaFileRepository extends BaseRepository implements MediaFileInterface
 
     /**
      * @param $params
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model|null|object
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|Collection|Model|null|object
+     * @throws RepositoryException
      */
     protected function getFile($params)
     {
@@ -274,7 +281,12 @@ class MediaFileRepository extends BaseRepository implements MediaFileInterface
     /**
      * {@inheritDoc}
      */
-    public function getTrashed($folderId, array $params = [], $withFolders = true, $folderParams = [])
+    public function getTrashed(
+        int $folderId,
+        array $params = [],
+        bool $withFolders = true,
+        array $folderParams = []
+    ): mixed
     {
         $params = array_merge([
             'order_by'  => [
@@ -380,7 +392,7 @@ class MediaFileRepository extends BaseRepository implements MediaFileInterface
     /**
      * {@inheritDoc}
      */
-    public function emptyTrash()
+    public function emptyTrash(): bool
     {
         $files = $this->model->onlyTrashed();
 

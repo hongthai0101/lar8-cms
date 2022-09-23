@@ -22,7 +22,7 @@ class MediaFolderRepository extends BaseRepository implements MediaFolderInterfa
     /**
      * {@inheritDoc}
      */
-    public function getFolderByParentId($folderId, array $params = [], $withTrash = false)
+    public function getFolderByParentId(int $folderId, array $params = [], $withTrash = false): mixed
     {
         $params = array_merge([
             'condition' => [],
@@ -92,7 +92,7 @@ class MediaFolderRepository extends BaseRepository implements MediaFolderInterfa
     /**
      * {@inheritDoc}
      */
-    public function getBreadcrumbs($parentId, $breadcrumbs = [])
+    public function getBreadcrumbs(int $parentId,array $breadcrumbs = []): array
     {
         if (!$parentId) {
             return $breadcrumbs;
@@ -116,7 +116,7 @@ class MediaFolderRepository extends BaseRepository implements MediaFolderInterfa
     /**
      * {@inheritDoc}
      */
-    public function getTrashed($parentId, array $params = [])
+    public function getTrashed(int $parentId, array $params = []): mixed
     {
         $params = array_merge([
             'where' => [],
@@ -168,7 +168,7 @@ class MediaFolderRepository extends BaseRepository implements MediaFolderInterfa
     /**
      * {@inheritDoc}
      */
-    public function getAllChildFolders($parentId, $child = [])
+    public function getAllChildFolders(int $parentId,array $child = []): array
     {
         if (!$parentId) {
             return $child;
@@ -189,7 +189,7 @@ class MediaFolderRepository extends BaseRepository implements MediaFolderInterfa
     /**
      * {@inheritDoc}
      */
-    public function getFullPath($folderId, $path = null)
+    public function getFullPath(int $folderId,string $path = ''): string
     {
         if (!$folderId) {
             return $path;
@@ -226,7 +226,7 @@ class MediaFolderRepository extends BaseRepository implements MediaFolderInterfa
     /**
      * {@inheritDoc}
      */
-    public function emptyTrash()
+    public function emptyTrash(): bool
     {
         $folders = $this->model->onlyTrashed();
 

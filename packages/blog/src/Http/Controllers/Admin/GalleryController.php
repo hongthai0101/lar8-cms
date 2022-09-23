@@ -21,7 +21,7 @@ class GalleryController extends BaseController
     /**
      * @var GalleryRepository
      */
-    private $repository;
+    private GalleryRepository $repository;
 
     /**
      * GalleryController constructor.

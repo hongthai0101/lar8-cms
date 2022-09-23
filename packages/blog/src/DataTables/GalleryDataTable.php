@@ -12,11 +12,13 @@ use Yajra\DataTables\Html\Column;
 class GalleryDataTable extends DataTableAbstract
 {
     protected $tableId = 'galleries-table';
+
     /**
      * Build DataTable class.
      *
      * @param Builder $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
+     * @throws \Yajra\DataTables\Exceptions\Exception
      */
     public function dataTable($query)
     {
@@ -113,7 +115,7 @@ class GalleryDataTable extends DataTableAbstract
      *
      * @return string
      */
-    protected function filename()
+    protected function filename(): string
     {
         return 'Gallery_' . date('YmdHis');
     }

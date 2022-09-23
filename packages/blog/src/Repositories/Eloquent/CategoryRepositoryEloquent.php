@@ -7,7 +7,17 @@ use Messi\Blog\Repositories\Contracts\CategoryRepository;
 
 class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepository
 {
-    public function model()
+    /**
+     * @var string[]
+     */
+    protected $fieldSearchable = [
+        'title' => 'like',
+        'description' => 'like',
+        'status' => '=',
+        'is_featured' => '='
+    ];
+
+    public function model(): string
     {
         return Category::class;
     }

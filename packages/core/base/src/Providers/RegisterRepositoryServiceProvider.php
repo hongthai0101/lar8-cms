@@ -2,6 +2,7 @@
 
 namespace Messi\Base\Providers;
 
+use Exception;
 use Messi\Base\Repositories\Contracts\MetaBoxRepository;
 use Messi\Base\Repositories\Contracts\SlugRepository;
 use Messi\Base\Repositories\Contracts\UserRepository;
@@ -12,7 +13,6 @@ use Messi\Base\Repositories\Contracts\RoleRepository;
 use Messi\Base\Repositories\Eloquent\PermissionRepositoryEloquent;
 use Messi\Base\Repositories\Contracts\PermissionRepository;
 use Messi\Base\Repositories\Eloquent\RoleRepositoryEloquent;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 
 class RegisterRepositoryServiceProvider extends ServiceProvider
@@ -21,10 +21,10 @@ class RegisterRepositoryServiceProvider extends ServiceProvider
     /**
      * @var bool
      */
-    protected $defer = true;
+    protected bool $defer = true;
 
     /**
-     * @throws \Exception | BindingResolutionException
+     * @throws Exception
      */
     public function register()
     {
@@ -36,7 +36,7 @@ class RegisterRepositoryServiceProvider extends ServiceProvider
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function boot()
     {

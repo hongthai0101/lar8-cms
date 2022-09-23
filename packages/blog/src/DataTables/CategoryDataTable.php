@@ -6,17 +6,20 @@ use Illuminate\Database\Query\Builder;
 use Messi\Base\Supports\DataTableAbstract;
 use Messi\Base\Types\MasterData;
 use Messi\Blog\Models\Category;
+use Yajra\DataTables\Exceptions\Exception;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 
 class CategoryDataTable extends DataTableAbstract
 {
     protected $tableId = 'categories-table';
+
     /**
      * Build DataTable class.
      *
      * @param Builder $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
+     * @throws Exception
      */
     public function dataTable($query): \Yajra\DataTables\DataTableAbstract
     {
@@ -45,7 +48,7 @@ class CategoryDataTable extends DataTableAbstract
      * @param Category $model
      * @return mixed
      */
-    public function query(Category $model)
+    public function query(Category $model): mixed
     {
         $query = $model
             ->newQuery()
@@ -110,7 +113,7 @@ class CategoryDataTable extends DataTableAbstract
      *
      * @return string
      */
-    protected function filename()
+    protected function filename(): string
     {
         return 'Category_' . date('YmdHis');
     }

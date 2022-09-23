@@ -2,6 +2,9 @@
 
 namespace Messi\Media;
 
+use Illuminate\Contracts\Filesystem\FileExistsException;
+use League\Flysystem\FileNotFoundException;
+use League\Flysystem\FilesystemException;
 use Messi\Media\Http\Resources\FileResource;
 use Messi\Media\Models\MediaFile;
 use Messi\Media\Repositories\Interfaces\MediaFileInterface;
@@ -33,27 +36,27 @@ class Media
     /**
      * @var array
      */
-    protected $permissions = [];
+    protected array $permissions = [];
 
     /**
      * @var UploadsManager
      */
-    protected $uploadManager;
+    protected UploadsManager $uploadManager;
 
     /**
      * @var MediaFileInterface
      */
-    protected $fileRepository;
+    protected MediaFileInterface $fileRepository;
 
     /**
      * @var MediaFolderInterface
      */
-    protected $folderRepository;
+    protected MediaFolderInterface $folderRepository;
 
     /**
      * @var ThumbnailService
      */
-    protected $thumbnailService;
+    protected ThumbnailService $thumbnailService;
 
     /**
      * @param MediaFileInterface $fileRepository
@@ -141,11 +144,16 @@ class Media
     /**
      * @param string $message
      * @param array $data
-     * @param null $code
+     * @param int | null $code
      * @param int $status
      * @return JsonResponse
      */
-    public function responseError($message, $data = [], $code = null, $status = 200): JsonResponse
+    public function responseError(
+        string $message,
+        array $data = [],
+        int | null $code = null,
+        int $status = 200
+    ): JsonResponse
     {
         return response()->json([
             'error'   => true,
@@ -157,9 +165,9 @@ class Media
 
     /**
      * @param string $url
-     * @return array|mixed
+     * @return array|null
      */
-    public function getAllImageSizes($url): array
+    public function getAllImageSizes(string $url): array|null
     {
         $images = [];
         foreach ($this->getSizes() as $size) {
@@ -183,9 +191,14 @@ class Media
      * @param null $size
      * @param bool $relativePath
      * @param null $default
-     * @return Application|UrlGenerator|string|string[]|null
+     * @return Application|UrlGenerator|string|null
      */
-    public function getImageUrl($url, $size = null, $relativePath = false, $default = null)
+    public function getImageUrl(
+        string| null $url,
+        $size = null,
+        bool $relativePath = false,
+        $default = null
+    ): Application|UrlGenerator|string|null
     {
         if (empty($url)) {
             return $default;
@@ -229,7 +242,7 @@ class Media
      * @param string $path
      * @return string
      */
-    public function url($path): string
+    public function url(string $path): string
     {
         if (Str::contains($path, 'https://') || Str::contains($path, 'http://')) {
             return $path;
@@ -269,7 +282,7 @@ class Media
 
     /**
      * @param string $name
-     * @return string
+     * @return ?string
      */
     public function getSize(string $name): ?string
     {
@@ -280,7 +293,7 @@ class Media
      * @param MediaFile|Model $file
      * @return bool
      */
-    public function deleteFile(MediaFile $file): bool
+    public function deleteFile(MediaFile|Model $file): bool
     {
         $this->deleteThumbnails($file);
 
@@ -291,7 +304,7 @@ class Media
      * @param MediaFile|Model $file
      * @return bool
      */
-    public function deleteThumbnails(MediaFile $file): bool
+    public function deleteThumbnails(MediaFile|Model $file): bool
     {
         if (!$file->canGenerateThumbnails()) {
             return false;
@@ -326,7 +339,7 @@ class Media
     /**
      * @param string $permission
      */
-    public function removePermission($permission)
+    public function removePermission(string $permission)
     {
         Arr::forget($this->permissions, $permission);
     }
@@ -334,7 +347,7 @@ class Media
     /**
      * @param string $permission
      */
-    public function addPermission($permission)
+    public function addPermission(string $permission)
     {
         $this->permissions[] = $permission;
     }
@@ -343,7 +356,7 @@ class Media
      * @param string $permission
      * @return bool
      */
-    public function hasPermission($permission): bool
+    public function hasPermission(string $permission): bool
     {
         return in_array($permission, $this->permissions);
     }
@@ -395,11 +408,17 @@ class Media
     /**
      * @param Request $request
      * @param int $folderId
-     * @param null $folderName
+     * @param string | null $folderName
      * @param string $fileInput
      * @return Application|ResponseFactory|JsonResponse|Response
+     * @throws FilesystemException
      */
-    public function uploadFromEditor(Request $request, $folderId = 0, $folderName = null, $fileInput = 'upload')
+    public function uploadFromEditor(
+        Request $request,
+        int $folderId = 0,
+        string | null $folderName = null,
+        string $fileInput = 'upload'
+    ): Application|ResponseFactory|JsonResponse|Response
     {
         $validator = Validator::make($request->all(), [
             'upload' => 'required|image|mimes:jpg,jpeg,png,webp',
@@ -434,13 +453,19 @@ class Media
     }
 
     /**
-     * @param UploadedFile $fileUpload
+     * @param UploadedFile | null $fileUpload
      * @param int $folderId
      * @param string|null $folderSlug
      * @param bool $skipValidation
      * @return JsonResponse|array
+     * @throws FilesystemException
      */
-    public function handleUpload($fileUpload, $folderId = 0, $folderSlug = null, $skipValidation = false): array
+    public function handleUpload(
+        UploadedFile | null $fileUpload,
+        int $folderId = 0,
+        string|null $folderSlug = null,
+        bool $skipValidation = false
+    ): array | JsonResponse
     {
         if (request()->input('path')) {
             $folderId = $this->handleTargetFolder($folderId, request()->input('path'));
@@ -568,7 +593,7 @@ class Media
      * Returns a file size limit in bytes based on the PHP upload_max_filesize and post_max_size
      * @return float|int
      */
-    public function getServerConfigMaxUploadFileSize()
+    public function getServerConfigMaxUploadFileSize(): float|int
     {
         // Start with post_max_size.
         $maxSize = $this->parseSize(ini_get('post_max_size'));
@@ -587,7 +612,7 @@ class Media
      * @param int $size
      * @return float - bytes
      */
-    public function parseSize($size)
+    public function parseSize(int $size): float
     {
         $unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
         $size = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
@@ -602,8 +627,8 @@ class Media
     /**
      * @param MediaFile $file
      * @return bool
-     * @throws \Illuminate\Contracts\Filesystem\FileExistsException
-     * @throws \League\Flysystem\FileNotFoundException
+     * @throws FileExistsException
+     * @throws FileNotFoundException|FilesystemException
      */
     public function generateThumbnails(MediaFile $file): bool
     {
@@ -628,8 +653,10 @@ class Media
 
             // 10% less then an actual image (play with this value)
             // Watermark will be 10 less then the actual width of the image
-            $watermarkSize = round($image->width() * (setting('media_watermark_size',
-                        config('core.media.media.watermark.size')) / 100), 2);
+            $watermarkSize = round(
+                $image->width() * setting('media_watermark_size',
+                    config('core.media.media.watermark.size') / 100),
+                2);
 
             // Resize watermark width keep height auto
             $watermark
@@ -657,7 +684,7 @@ class Media
      * @param string $url
      * @return string
      */
-    public function getRealPath($url)
+    public function getRealPath(string $url): string
     {
         switch (config('filesystems.default')) {
             case 'local':
@@ -675,7 +702,7 @@ class Media
      * @param string $mimeType
      * @return bool
      */
-    public function isImage($mimeType)
+    public function isImage(string $mimeType): bool
     {
         return Str::startsWith($mimeType, 'image/');
     }
@@ -693,9 +720,15 @@ class Media
      * @param int $folderId
      * @param string|null $folderSlug
      * @param string|null $defaultMimetype
-     * @return array
+     * @return JsonResponse|array|null
+     * @throws FilesystemException
      */
-    public function uploadFromUrl(string $url, int $folderId = 0, ?string $folderSlug = null, $defaultMimetype = null)
+    public function uploadFromUrl(
+        string $url,
+        int $folderId = 0,
+        ?string $folderSlug = null,
+        string $defaultMimetype = null
+    ): JsonResponse|array|null
     {
         if (empty($url)) {
             return [
@@ -755,10 +788,11 @@ class Media
      * @param string $path
      * @param int $folderId
      * @param string|null $folderSlug
-     * @param string|null $defaultMimetype
-     * @return array
+     * @param null $defaultMimetype
+     * @return JsonResponse|array
+     * @throws FilesystemException
      */
-    public function uploadFromPath(string $path, int $folderId = 0, ?string $folderSlug = null, $defaultMimetype = null)
+    public function uploadFromPath(string $path, int $folderId = 0, ?string $folderSlug = null, $defaultMimetype = null): JsonResponse|array
     {
         if (empty($path)) {
             return [
@@ -814,7 +848,7 @@ class Media
      * @param string $url
      * @return mixed|string|null
      */
-    public function getMimeType($url)
+    public function getMimeType(string $url): mixed
     {
         if (!$url) {
             return null;
@@ -829,7 +863,7 @@ class Media
      * @param string $mimeType
      * @return bool
      */
-    public function canGenerateThumbnails($mimeType): bool
+    public function canGenerateThumbnails(string $mimeType): bool
     {
         return Media::isImage($mimeType) && !in_array($mimeType, ['image/svg+xml', 'image/x-icon']);
     }
@@ -840,7 +874,7 @@ class Media
      * @param int $parentId
      * @return mixed
      */
-    public function createFolder($folderSlug, $parentId = 0)
+    public function createFolder(string $folderSlug, int $parentId = 0): mixed
     {
         $folder = $this->folderRepository->getFirstBy(['media_folders.slug' => $folderSlug]);
 
@@ -862,9 +896,9 @@ class Media
      * @param string $filePath
      * @return string
      */
-    public function handleTargetFolder($folderId = 0, $filePath = ''): string
+    public function handleTargetFolder(int $folderId = 0, string $filePath = ''): string
     {
-        if (strpos($filePath, '/') !== false) {
+        if (str_contains($filePath, '/')) {
             $paths = explode('/', $filePath);
             array_pop($paths);
             foreach ($paths as $folder) {

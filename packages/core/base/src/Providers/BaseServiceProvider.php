@@ -2,6 +2,7 @@
 
 namespace Messi\Base\Providers;
 
+use Exception;
 use Illuminate\Routing\Router;
 use Messi\Base\Events\RoleModified;
 use Messi\Base\Events\UserModified;
@@ -15,7 +16,7 @@ use Messi\Base\Traits\LoadPublishServiceTrait;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 use Messi\Base\Http\Middleware\JwtMiddleware;
-use Tymon\JWTAuth\Http\Middleware\RefreshToken;
+use PHPOpenSourceSaver\JWTAuth\Http\Middleware\RefreshToken;
 use Yajra\Acl\Middleware\CanAtLeastMiddleware;
 use Yajra\Acl\Middleware\PermissionMiddleware;
 use Yajra\Acl\Middleware\RoleMiddleware;
@@ -30,10 +31,10 @@ class BaseServiceProvider extends ServiceProvider
     /**
      * @var bool
      */
-    protected $defer = true;
+    protected bool $defer = true;
 
     /**
-     * @throws \Exception | BindingResolutionException
+     * @throws Exception | BindingResolutionException
      */
     public function register()
     {
@@ -63,7 +64,7 @@ class BaseServiceProvider extends ServiceProvider
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function boot()
     {
@@ -102,7 +103,7 @@ class BaseServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return array ('setting');
     }

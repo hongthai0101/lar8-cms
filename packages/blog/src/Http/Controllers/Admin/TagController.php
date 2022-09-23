@@ -21,7 +21,7 @@ class TagController extends BaseController
     /**
      * @var TagRepository
      */
-    private $repository;
+    private TagRepository $repository;
 
     /**
      * TagController constructor.

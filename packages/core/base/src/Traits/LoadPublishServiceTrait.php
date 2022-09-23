@@ -35,9 +35,10 @@ trait LoadPublishServiceTrait
     /**
      * Publish the given configuration file name (without extension) and the given module
      * @param array|string $fileNames
-     * @return $this
+     * @param string $groups
+     * @throws Exception
      */
-    public function loadPublishConfigurations($fileNames): self
+    public function loadPublishConfigurations(mixed $fileNames, string $groups = 'base-config'): self
     {
         if (!is_array($fileNames)) {
             $fileNames = [$fileNames];
@@ -47,7 +48,7 @@ trait LoadPublishServiceTrait
             if ($this->app->runningInConsole()) {
                 $this->publishes([
                     $this->getConfigFilePath($fileName) => config_path($this->getDashedNamespace() . '/' . $fileName . '.php'),
-                ], 'base-config');
+                ], $groups);
             }
         }
 
@@ -108,10 +109,10 @@ trait LoadPublishServiceTrait
 
     /**
      * Publish the given configuration file name (without extension) and the given module
-     * @param array|string $fileNames
-     * @return $this
+     * @param array $fileNames
+     * @return self
      */
-    public function loadRoutes($fileNames = ['web']): self
+    public function loadRoutes(array $fileNames = ['web']): self
     {
         if (!is_array($fileNames)) {
             $fileNames = [$fileNames];
@@ -128,7 +129,7 @@ trait LoadPublishServiceTrait
      * @param string $file
      * @return string
      */
-    protected function getRouteFilePath($file): string
+    protected function getRouteFilePath(string $file): string
     {
         $file = $this->getBasePath() . $this->getDashedNamespace() . '/routes/' . $file . '.php';
 

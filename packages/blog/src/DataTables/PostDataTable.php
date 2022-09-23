@@ -6,17 +6,20 @@ use Illuminate\Database\Query\Builder;
 use Messi\Base\Supports\DataTableAbstract;
 use Messi\Base\Types\MasterData;
 use Messi\Blog\Models\Post;
+use Yajra\DataTables\Exceptions\Exception;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 
 class PostDataTable extends DataTableAbstract
 {
     protected $tableId = 'posts-table';
+
     /**
      * Build DataTable class.
      *
      * @param Builder $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
+     * @throws Exception
      */
     public function dataTable($query)
     {
@@ -115,7 +118,7 @@ class PostDataTable extends DataTableAbstract
      *
      * @return string
      */
-    protected function filename()
+    protected function filename(): string
     {
         return 'Post_' . date('YmdHis');
     }

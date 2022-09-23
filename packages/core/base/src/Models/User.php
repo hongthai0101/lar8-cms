@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Yajra\Acl\Traits\HasRoleAndPermission;
 
 class User extends Authenticatable implements JWTSubject
@@ -48,10 +48,10 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Set the password for user.
      *
-     * @param  string  $value
+     * @param string $value
      * @return void
      */
-    public function setPasswordAttribute($value)
+    public function setPasswordAttribute(string $value)
     {
         $this->attributes['password'] = bcrypt($value);
     }
@@ -61,7 +61,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return mixed
      */
-    public function getJWTIdentifier()
+    public function getJWTIdentifier(): mixed
     {
         return $this->getKey();
     }
@@ -71,7 +71,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return array
      */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }

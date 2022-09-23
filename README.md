@@ -19,3 +19,6 @@
 ### Step 5
 - Goto link /admin/login
 - Login with account ```admin@admin.com / 111111```
+
+### Step 6
+- Goto link /api/documentation

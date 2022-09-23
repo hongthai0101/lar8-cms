@@ -2,11 +2,12 @@
 
 namespace Messi\Base\Http\Controllers\Api;
 
-
+use Illuminate\Http\JsonResponse;
 use Messi\Base\Http\Requests\Api\AuthRequest;
+use Messi\Base\Http\Resources\CategoryResource;
 use Messi\Base\Repositories\Contracts\UserRepository;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpFoundation\Response;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use JWTAuth;
 
 class AuthController extends ApiController
@@ -14,7 +15,7 @@ class AuthController extends ApiController
     /**
      * @var UserRepository
      */
-    private $repository;
+    private UserRepository $repository;
 
     /**
      * Create a new AuthController instance.
@@ -27,12 +28,30 @@ class AuthController extends ApiController
     }
 
     /**
-     * Get a JWT via given credentials.
+     * @OA\Post (
+     *     path="/api/v1/auth/login",
+     *     tags={"Auth"},
+     *     summary="Đăng nhập",
+     *     description="Trả về token và thời gian hết hạn",
+     *     @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/LoginRequestSchema")
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              ref="#/components/schemas/LoginResponseSchema"
+     *          ),
+     *       ),
+     * )
      *
+     * Get a JWT via given credentials.
      * @param AuthRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function login(AuthRequest $request)
+    public function login(AuthRequest $request): JsonResponse
     {
         $credentials = $request->only('email', 'password');
         try {
@@ -46,25 +65,52 @@ class AuthController extends ApiController
     }
 
     /**
-     * Register a User.
+     * @OA\Post (
+     *     path="/api/v1/auth/register",
+     *     tags={"Auth"},
+     *     summary="Register",
+     *     @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/RegisterRequestSchema")
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              ref="#/components/schemas/RegisterResponseSchema"
+     *          ),
+     *       ),
+     * )
      *
+     * Register a User.
      * @param AuthRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function register(AuthRequest $request) {
-
+    public function register(AuthRequest $request): JsonResponse
+    {
         $user = $this->repository->create($request->validated());
         return $this->successCreated($user->toArray());
     }
 
-
     /**
-     * Log the user out (Invalidate the token).
+     * @OA\Post (
+     *     path="/api/v1/auth/logout",
+     *     tags={"Auth"},
+     *     summary="Logout",
+     *     security={{"bearerToken":{}}},
+     *     @OA\Response(
+     *         response=201,
+     *         description="Successful operation",
+     *          @OA\JsonContent(),
+     *       ),
+     * )
      *
+     * Log the user out (Invalidate the token).
      * @param AuthRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function logout(AuthRequest $request)
+    public function logout(AuthRequest $request): JsonResponse
     {
         try {
             JWTAuth::invalidate($request->token);
@@ -75,33 +121,59 @@ class AuthController extends ApiController
     }
 
     /**
-     * Refresh a token.
+     * @OA\Post (
+     *     path="/api/v1/auth/refresh",
+     *     tags={"Auth"},
+     *     summary="Refresh",
+     *     security={{"bearerToken":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              ref="#/components/schemas/LoginResponseSchema"),
+     *       ),
+     * )
      *
-     * @return \Illuminate\Http\JsonResponse
+     * Refresh a token.
+     * @return JsonResponse
      */
-    public function refresh()
+    public function refresh(): JsonResponse
     {
         return $this->respondWithToken(auth('api')->refresh());
     }
 
     /**
-     * Get the authenticated User.
+     * @OA\Get (
+     *     path="/api/v1/auth/profile",
+     *     tags={"Auth"},
+     *     summary="Profile",
+     *     security={{"bearerToken":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              ref="#/components/schemas/ProfileResource"),
+     *       ),
+     * )
      *
-     * @return \Illuminate\Http\JsonResponse
+     * Get the authenticated User.
+     * @return CategoryResource
      */
-    public function profile()
+    public function profile(): CategoryResource
     {
-        return response()->json(auth()->user());
+        return new CategoryResource(auth()->user());
     }
 
     /**
      * Get the token array structure.
      *
-     * @param  string $token
+     * @param string $token
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    protected function respondWithToken($token)
+    protected function respondWithToken(string $token): JsonResponse
     {
         return $this->success([
             'access_token' => $token,

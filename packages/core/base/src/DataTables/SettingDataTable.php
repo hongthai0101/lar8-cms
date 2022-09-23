@@ -5,17 +5,20 @@ namespace Messi\Base\DataTables;
 use Illuminate\Database\Query\Builder;
 use Messi\Base\Models\Setting;
 use Messi\Base\Supports\DataTableAbstract;
+use Yajra\DataTables\Exceptions\Exception;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 
 class SettingDataTable extends DataTableAbstract
 {
     protected $tableId = 'settings-table';
+
     /**
      * Build DataTable class.
      *
      * @param Builder $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
+     * @throws Exception
      */
     public function dataTable($query)
     {
@@ -74,7 +77,7 @@ class SettingDataTable extends DataTableAbstract
      *
      * @return string
      */
-    protected function filename()
+    protected function filename():string
     {
         return 'Setting_' . date('YmdHis');
     }

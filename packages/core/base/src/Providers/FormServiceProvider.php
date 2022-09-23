@@ -2,13 +2,14 @@
 
 namespace Messi\Base\Providers;
 
+use Exception;
 use Form;
 use Illuminate\Support\ServiceProvider;
 
 class FormServiceProvider extends ServiceProvider
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function boot()
     {

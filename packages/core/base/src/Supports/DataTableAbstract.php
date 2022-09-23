@@ -9,7 +9,7 @@ use Yajra\DataTables\Services\DataTable;
 abstract class DataTableAbstract extends DataTable
 {
     /** @var array  */
-    protected $actions = ['print', 'csv', 'excel'];
+    protected array $actions = ['print', 'csv', 'excel'];
 
     /** @var string */
     protected $tableId;
@@ -44,11 +44,11 @@ abstract class DataTableAbstract extends DataTable
 
         return "function (settings, json) {
                 this.api().columns().every(function (index) {
-                    var column = this;                                 
+                    var column = this;
                    var elementStr = JSON.stringify($elementStr);
                    var elementObj = JSON.parse(elementStr);
                    var el = elementObj[index]
-                   
+
                     if(el) {
                         $(el).appendTo($(column.footer()).empty())
                         .on('change', function () {
@@ -97,7 +97,7 @@ abstract class DataTableAbstract extends DataTable
     /**
      * @return \Yajra\DataTables\Html\Builder
      */
-    public function builder()
+    public function builder(): \Yajra\DataTables\Html\Builder
     {
         return parent::builder()
             ->minifiedAjax()

@@ -5,17 +5,20 @@ namespace Messi\Base\DataTables;
 use Illuminate\Database\Query\Builder;
 use Messi\Base\Supports\DataTableAbstract;
 use Yajra\Acl\Models\Role;
+use Yajra\DataTables\Exceptions\Exception;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 
 class RoleDataTable extends DataTableAbstract
 {
     protected $tableId = 'roles-table';
+
     /**
      * Build DataTable class.
      *
      * @param Builder $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
+     * @throws Exception
      */
     public function dataTable($query)
     {
@@ -103,7 +106,7 @@ class RoleDataTable extends DataTableAbstract
      *
      * @return string
      */
-    protected function filename()
+    protected function filename(): string
     {
         return 'Roles_' . date('YmdHis');
     }

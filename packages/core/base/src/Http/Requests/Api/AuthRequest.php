@@ -8,7 +8,7 @@ class AuthRequest extends ApiRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $routeName = $this->route()->getName();
         if ($routeName === 'api.auth.login') {
@@ -53,7 +53,7 @@ class AuthRequest extends ApiRequest
     /**
      * @return array
      */
-    private function logoutRules()
+    private function logoutRules(): array
     {
         return [
             'token' => 'required'

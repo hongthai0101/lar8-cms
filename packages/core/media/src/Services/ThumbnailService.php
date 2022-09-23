@@ -4,6 +4,7 @@ namespace Messi\Media\Services;
 
 use Exception;
 use Intervention\Image\ImageManager;
+use League\Flysystem\FilesystemException;
 use Log;
 
 class ThumbnailService
@@ -12,57 +13,57 @@ class ThumbnailService
     /**
      * @var ImageManager
      */
-    protected $imageManager;
+    protected ImageManager $imageManager;
 
     /**
      * @var string
      */
-    protected $imagePath;
+    protected string $imagePath;
 
     /**
      * @var float
      */
-    protected $thumbRate;
+    protected float $thumbRate;
 
     /**
      * @var int
      */
-    protected $thumbWidth;
+    protected int $thumbWidth;
 
     /**
      * @var int
      */
-    protected $thumbHeight;
+    protected int $thumbHeight;
 
     /**
      * @var string
      */
-    protected $destinationPath;
+    protected string $destinationPath;
+
+    /**
+     * @var string | null
+     */
+    protected string | null $xCoordinate;
+
+    /**
+     * @var string | null
+     */
+    protected string | null $yCoordinate;
 
     /**
      * @var string
      */
-    protected $xCoordinate;
+    protected string $fitPosition;
 
     /**
      * @var string
      */
-    protected $yCoordinate;
-
-    /**
-     * @var string
-     */
-    protected $fitPosition;
-
-    /**
-     * @var string
-     */
-    protected $fileName;
+    protected string $fileName;
 
     /**
      * @var UploadsManager
      */
-    protected $uploadManager;
+    protected UploadsManager $uploadManager;
 
     /**
      * ThumbnailService constructor.
@@ -89,7 +90,7 @@ class ThumbnailService
      * @param string $imagePath
      * @return ThumbnailService
      */
-    public function setImage($imagePath)
+    public function setImage(string $imagePath): ThumbnailService
     {
         $this->imagePath = $imagePath;
 
@@ -99,17 +100,17 @@ class ThumbnailService
     /**
      * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->imagePath;
     }
 
     /**
      * @param int $width
-     * @param int $height
+     * @param int|null $height
      * @return ThumbnailService
      */
-    public function setSize($width, $height = null)
+    public function setSize(int $width, int | null $height = null): ThumbnailService
     {
         $this->thumbWidth = $width;
         $this->thumbHeight = $height;
@@ -124,7 +125,7 @@ class ThumbnailService
     /**
      * @return array
      */
-    public function getSize()
+    public function getSize(): array
     {
         return [$this->thumbWidth, $this->thumbHeight];
     }
@@ -133,7 +134,7 @@ class ThumbnailService
      * @param string $destinationPath
      * @return ThumbnailService
      */
-    public function setDestinationPath($destinationPath)
+    public function setDestinationPath(string $destinationPath): ThumbnailService
     {
         $this->destinationPath = $destinationPath;
 
@@ -145,7 +146,7 @@ class ThumbnailService
      * @param int $yCoordination
      * @return ThumbnailService
      */
-    public function setCoordinates($xCoordination, $yCoordination)
+    public function setCoordinates(int $xCoordination,int $yCoordination): ThumbnailService
     {
         $this->xCoordinate = $xCoordination;
         $this->yCoordinate = $yCoordination;
@@ -156,7 +157,7 @@ class ThumbnailService
     /**
      * @return array
      */
-    public function getCoordinates()
+    public function getCoordinates(): array
     {
         return [$this->xCoordinate, $this->yCoordinate];
     }
@@ -165,7 +166,7 @@ class ThumbnailService
      * @param string $fileName
      * @return ThumbnailService
      */
-    public function setFileName($fileName)
+    public function setFileName(string $fileName): ThumbnailService
     {
         $this->fileName = $fileName;
 
@@ -175,7 +176,7 @@ class ThumbnailService
     /**
      * @return string
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->fileName;
     }
@@ -183,8 +184,9 @@ class ThumbnailService
     /**
      * @param string $type
      * @return bool|string
+     * @throws FilesystemException
      */
-    public function save($type = 'fit')
+    public function save(string $type = 'fit'): bool|string
     {
         $fileName = pathinfo($this->imagePath, PATHINFO_BASENAME);
 
