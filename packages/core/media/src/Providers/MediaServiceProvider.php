@@ -2,6 +2,7 @@
 
 namespace Messi\Media\Providers;
 
+use Messi\Base\Supports\Setting;
 use Messi\Base\Traits\LoadPublishServiceTrait;
 use Messi\Media\Chunks\Storage\ChunkStorage;
 use Messi\Media\Commands\ClearChunksCommand;
@@ -28,7 +29,7 @@ class MediaServiceProvider extends ServiceProvider
     /**
      * @var bool
      */
-    protected $defer = true;
+    protected bool $defer = true;
 
     public function register()
     {
@@ -48,6 +49,15 @@ class MediaServiceProvider extends ServiceProvider
             ->loadPublishViews()
             ->loadRoutes()
             ->publishAssets();
+
+        $config = $this->app->make('config');
+        $config->set([
+            'filesystems.default'         => setting('__filesystem_default__', 'local'),
+            'filesystems.disks.s3.key'    => setting('__s3_id__', $config->get('filesystems.disks.s3.key')),
+            'filesystems.disks.s3.secret' => setting('__s3_secret__', $config->get('filesystems.disks.s3.secret')),
+            'filesystems.disks.s3.region' => setting('__s3_region__', $config->get('filesystems.disks.s3.region')),
+            'filesystems.disks.s3.bucket' => setting('__s3_bucket__', $config->get('filesystems.disks.s3.bucket'))
+        ]);
 
         $this->commands([
             GenerateThumbnailCommand::class,

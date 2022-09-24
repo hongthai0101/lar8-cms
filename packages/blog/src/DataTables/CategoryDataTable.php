@@ -32,12 +32,14 @@ class CategoryDataTable extends DataTableAbstract
             ->editColumn('action', function (Category $item) {
                 return $this->setActionColumn([
                     [
+                        'permission' => 'update-blog',
                         'type' => 'edit',
                         'route' => route('admin.categories.edit', $item->id)
                     ],
                     [
                         'type' => 'destroy',
-                        'route' => route('admin.categories.destroy', $item->id)
+                        'route' => route('admin.categories.destroy', $item->id),
+                        'permission' => 'delete-blog',
                     ]
                 ]);
             })

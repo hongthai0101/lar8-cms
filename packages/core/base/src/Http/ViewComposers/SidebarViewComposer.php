@@ -82,6 +82,14 @@ class SidebarViewComposer
                         'selected' => [
                             'admin.settings.email'
                         ]
+                    ],
+                    [
+                        'title' => __('Media'),
+                        'url' => route('admin.settings.media'),
+                        'permissions' => ['viewAny-setting'],
+                        'selected' => [
+                            'admin.settings.media'
+                        ]
                     ]
                 ]
             ],

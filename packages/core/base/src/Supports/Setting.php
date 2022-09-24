@@ -12,22 +12,22 @@ class Setting
      *
      * @var array
      */
-    protected $config;
+    protected array $config;
 
 
     /**
      * Database manager instance
      *
-     * @var \Illuminate\Database\DatabaseManager
+     * @var DatabaseManager
      */
-    protected $database;
+    protected DatabaseManager $database;
 
     /**
      * Cache
      *
      * @var Cache
      */
-    protected $cache;
+    protected Cache $cache;
 
     /**
      * Constructor
@@ -36,7 +36,7 @@ class Setting
      * @param Cache $cache
      * @param array $config
      */
-    public function __construct(DatabaseManager $database, Cache $cache, $config = array ())
+    public function __construct(DatabaseManager $database, Cache $cache, array $config = array ())
     {
         $this->database = $database;
         $this->config   = $config;

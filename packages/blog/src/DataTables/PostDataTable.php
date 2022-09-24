@@ -36,11 +36,13 @@ class PostDataTable extends DataTableAbstract
                 return $this->setActionColumn([
                     [
                         'type' => 'edit',
-                        'route' => route('admin.posts.edit', $item->id)
+                        'route' => route('admin.posts.edit', $item->id),
+                        'permission' => 'update-blog',
                     ],
                     [
                         'type' => 'destroy',
-                        'route' => route('admin.posts.destroy', $item->id)
+                        'route' => route('admin.posts.destroy', $item->id),
+                        'permission' => 'delete-blog',
                     ]
                 ]);
             })

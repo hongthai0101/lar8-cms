@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Messi\Base\DataTables\SettingDataTable;
 use Messi\Base\Forms\SettingEmailForm;
 use Messi\Base\Forms\SettingGeneralForm;
+use Messi\Base\Forms\SettingMediaForm;
 use Messi\Base\Http\Controllers\BaseController;
 use Messi\Base\Http\Requests\Admin\SettingRequest;
 use Messi\Base\Supports\Forms\FormBuilder;
@@ -29,7 +30,7 @@ class SettingController extends BaseController
      * @param SettingDataTable $userTable
      * @return mixed
      */
-    public function index(SettingDataTable $userTable)
+    public function index(SettingDataTable $userTable): mixed
     {
         setting('__admin_logo__', 1);
         $this->setTitle(__('Setting List'));
@@ -93,5 +94,24 @@ class SettingController extends BaseController
             ]
         ]);
         return $formBuilder->create(SettingEmailForm::class)->renderForm();
+    }
+
+    /**
+     * @param FormBuilder $formBuilder
+     * @return string
+     */
+    public function media(FormBuilder $formBuilder): string
+    {
+        $this->setTitle(__('Setting Media'));
+        $this->setBreadcrumbs([
+            [
+                'title' => __('Setting'),
+                'url' => route('admin.settings.media')
+            ],
+            [
+                'title' => __('Setting Media'),
+            ]
+        ]);
+        return $formBuilder->create(SettingMediaForm::class)->renderForm();
     }
 }

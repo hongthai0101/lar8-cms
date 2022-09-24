@@ -38,7 +38,7 @@ class PostController extends BaseController
      * @param PostDataTable $table
      * @return mixed
      */
-    public function index(PostDataTable $table)
+    public function index(PostDataTable $table): mixed
     {
         $this->setTitle(__('Post List'));
         $this->setBreadcrumbs([
@@ -73,7 +73,7 @@ class PostController extends BaseController
      * @param PostService $service
      * @return RedirectResponse|Redirector
      */
-    public function store(PostRequest $request, PostService $service)
+    public function store(PostRequest $request, PostService $service): Redirector|RedirectResponse
     {
         $service->store($request, $this->repository);
         return $this->redirect(route('admin.posts.index'));

@@ -33,11 +33,13 @@ class TagDataTable extends DataTableAbstract
                 return $this->setActionColumn([
                     [
                         'type' => 'edit',
-                        'route' => route('admin.tags.edit', $item->id)
+                        'route' => route('admin.tags.edit', $item->id),
+                        'permission' => 'update-blog',
                     ],
                     [
                         'type' => 'destroy',
-                        'route' => route('admin.tags.destroy', $item->id)
+                        'route' => route('admin.tags.destroy', $item->id),
+                        'permission' => 'delete-blog',
                     ]
                 ]);
             })

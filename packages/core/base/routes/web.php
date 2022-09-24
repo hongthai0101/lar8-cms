@@ -29,6 +29,7 @@ Route::group(['namespace' => 'Messi\Base\Http\Controllers\Admin', 'middleware' =
             //Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
             Route::get('settings/general', [SettingController::class, 'general'])->name('settings.general');
             Route::get('settings/email', [SettingController::class, 'email'])->name('settings.email');
+            Route::get('settings/media', [SettingController::class, 'media'])->name('settings.media');
             Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
         });
     });

@@ -29,15 +29,18 @@ class RoleDataTable extends DataTableAbstract
                 return $this->setActionColumn([
                     [
                         'type' => 'edit',
-                        'route' => route('admin.roles.edit', $item->id)
+                        'route' => route('admin.roles.edit', $item->id),
+                        'permission' => 'update-role'
                     ],
                     [
                         'type' => 'show',
-                        'route' => route('admin.roles.show', $item->id)
+                        'route' => route('admin.roles.show', $item->id),
+                        'permission' => 'view-role'
                     ],
                     [
                         'type' => 'destroy',
-                        'route' => route('admin.roles.destroy', $item->id)
+                        'route' => route('admin.roles.destroy', $item->id),
+                        'permission' => 'delete-role'
                     ]
                 ]);
             });

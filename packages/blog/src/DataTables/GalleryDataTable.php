@@ -35,11 +35,13 @@ class GalleryDataTable extends DataTableAbstract
                 return $this->setActionColumn([
                     [
                         'type' => 'edit',
-                        'route' => route('admin.galleries.edit', $item->id)
+                        'route' => route('admin.galleries.edit', $item->id),
+                        'permission' => 'update-blog',
                     ],
                     [
                         'type' => 'destroy',
-                        'route' => route('admin.galleries.destroy', $item->id)
+                        'route' => route('admin.galleries.destroy', $item->id),
+                        'permission' => 'delete-blog',
                     ]
                 ]);
             })

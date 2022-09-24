@@ -17,11 +17,12 @@ trait ControllerTrait
     {
         if (!$resource) return ;
 
-        if (config('app.env') == 'local') {
+        if (app()->isLocal()) {
             $this->createPermission($resource);
         }
 
         $permissions = $this->getPermissions($resource);
+
         if (empty($permissions)) return ;
 
         foreach ($permissions as $permission) {
@@ -45,7 +46,7 @@ trait ControllerTrait
      * @param $resource
      * @return array
      */
-    protected function getPermissions($resource)
+    protected function getPermissions($resource): array
     {
         $group = Str::title($resource);
         $slug = Str::slug($group);

@@ -31,11 +31,13 @@ class UsersDataTable extends DataTableAbstract
                 return $this->setActionColumn([
                     [
                         'type' => 'show',
-                        'route' => route('admin.users.show', $user->id)
+                        'route' => route('admin.users.show', $user->id),
+                        'permission' => 'view-user'
                     ],
                     [
                         'type' => 'destroy',
-                        'route' => route('admin.users.destroy', $user->id)
+                        'route' => route('admin.users.destroy', $user->id),
+                        'permission' => 'delete-user'
                     ]
                 ]);
             });

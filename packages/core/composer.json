@@ -27,7 +27,8 @@
         "yajra/laravel-acl": "^9.0",
         "yajra/laravel-datatables": "^9.0",
         "php-open-source-saver/jwt-auth": "^2.0",
-        "darkaonline/l5-swagger": "^8.3"
+        "darkaonline/l5-swagger": "^8.3",
+        "league/flysystem-aws-s3-v3": "^3.5"
     },
     "extra": {
         "laravel": {

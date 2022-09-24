@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Contracts\Routing\UrlGenerator;
+
 if (!function_exists('is_image')) {
     /**
      * Is the mime type an image
@@ -16,14 +18,19 @@ if (!function_exists('is_image')) {
 
 if (!function_exists('get_image_url')) {
     /**
-     * @param string $url
+     * @param string | null $url
      * @param string $size
      * @param bool $relativePath
      * @param null $default
-     * @return string
+     * @return string | null
      * @deprecated since 5.7
      */
-    function get_image_url($url, $size = null, $relativePath = false, $default = null)
+    function get_image_url(
+        string | null $url,
+        mixed $size = null,
+        bool $relativePath = false,
+        $default = null
+    ): string | null
     {
         return Media::getImageUrl($url, $size, $relativePath, $default);
     }
@@ -34,7 +41,7 @@ if (!function_exists('get_object_image')) {
      * @param string $image
      * @param null $size
      * @param bool $relativePath
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     * @return UrlGenerator|string
      * @deprecated since 5.7
      */
     function get_object_image($image, $size = null, $relativePath = false)

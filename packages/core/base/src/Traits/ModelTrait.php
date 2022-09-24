@@ -34,16 +34,12 @@ trait ModelTrait
      */
     private function getTypeStatus($status): string
     {
-        switch ($status) {
-            case 'publish':
-                return 'success';
-            case 'un_publish':
-                return 'warning';
-            case 'draft':
-                return 'danger';
-            default:
-                return 'metal';
-        }
+        return match ($status) {
+            'publish' => 'success',
+            'un_publish' => 'warning',
+            'draft' => 'danger',
+            default => 'metal',
+        };
     }
 
     /**

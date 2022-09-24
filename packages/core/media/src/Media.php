@@ -208,7 +208,6 @@ class Media
             if ($relativePath) {
                 return $url;
             }
-
             return $this->url($url);
         }
 
@@ -470,7 +469,6 @@ class Media
         if (request()->input('path')) {
             $folderId = $this->handleTargetFolder($folderId, request()->input('path'));
         }
-
         if (!$fileUpload) {
             return [
                 'error'   => true,

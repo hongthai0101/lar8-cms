@@ -37,7 +37,7 @@ class CategoryController extends BaseController
      * @param CategoryDataTable $table
      * @return mixed
      */
-    public function index(CategoryDataTable $table)
+    public function index(CategoryDataTable $table): mixed
     {
         $this->setTitle(__('Category List'));
         $this->setBreadcrumbs([
