@@ -23,6 +23,7 @@ class SidebarViewComposer
                     'admin.categories',
                     'admin.tags'
                 ],
+                'position' => 2,
                 'subs' => [
                     [
                         'title' => __('Post'),
@@ -57,7 +58,8 @@ class SidebarViewComposer
                 'selected' => [
                     'admin.galleries'
                 ],
-                'url' => route('admin.galleries.index')
+                'url' => route('admin.galleries.index'),
+                'position' => 3
             ]
         ];
         $view->with('blogSidebar', $sidebars);

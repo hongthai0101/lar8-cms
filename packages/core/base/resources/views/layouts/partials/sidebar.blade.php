@@ -9,6 +9,7 @@
 			$sidebars = array_merge($sidebars, ${$item});
 		}
 	}
+    $sidebars = collect($sidebars)->sortBy('position')->toArray();
 
 	$route = Request::route();
 	$currentRoute = $route->getName();

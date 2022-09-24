@@ -22,6 +22,7 @@ class SidebarViewComposer
                 'selected' => [
                     'admin.dashboard'
                 ],
+                'position' => 1
             ],
             [
                 'title'        => __('User'),
@@ -31,6 +32,7 @@ class SidebarViewComposer
                     'admin.users',
                     'admin.roles'
                 ],
+                'position' => 2,
                 'subs' => [
                     [
                         'title' => __('User'),
@@ -58,6 +60,7 @@ class SidebarViewComposer
                 'selected' => [
                     'admin.media'
                 ],
+                'position' => 998
             ],
             [
                 'title'        => __('Setting'),
@@ -66,6 +69,7 @@ class SidebarViewComposer
                 'selected' => [
                     'admin.settings'
                 ],
+                'position' => 999,
                 'subs' => [
                     [
                         'title' => __('General'),
