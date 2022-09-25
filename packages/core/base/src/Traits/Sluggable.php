@@ -1,11 +1,11 @@
 <?php
 namespace Messi\Base\Traits;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use JetBrains\PhpStorm\ArrayShape;
 use Messi\Base\Models\Slug as Eloquent;
 use Messi\Base\Repositories\Contracts\SlugRepository;
 
@@ -28,6 +28,7 @@ trait Sluggable
     /**
      * @return array
      */
+    #[ArrayShape(['source' => "string"])]
     protected function sluggable(): array
     {
         return [
@@ -46,7 +47,7 @@ trait Sluggable
             $slugRepo = app(SlugRepository::class);
 
             $slugRepo->createOrUpdate([
-                'key' => Str::slug($model->{$source}),
+                'key' => self::generateSlug($slugRepo, Str::slug($model->{$source})),
                 'reference_id' => $model->id,
                 'reference_type' => get_class($model)
             ], [
@@ -54,6 +55,19 @@ trait Sluggable
                 'reference_type' => get_class($model)
             ]);
         }
+    }
+
+    /**
+     * @param SlugRepository $slugRepo
+     * @param string $slug
+     * @return string
+     */
+    public static function generateSlug(SlugRepository $slugRepo, string $slug): string
+    {
+        while ($slugRepo->count(['key' => $slug]) !== 0) {
+            $slug .= strtolower(Str::random(3));
+        }
+        return $slug;
     }
 
     /**
@@ -82,7 +96,7 @@ trait Sluggable
     /**
      * @return mixed
      */
-    public function getSlugAttribute()
+    public function getSlugAttribute(): mixed
     {
         $slug = $this->slugRelation;
         return $slug->key;

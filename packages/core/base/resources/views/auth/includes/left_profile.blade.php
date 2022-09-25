@@ -6,7 +6,7 @@
             </div>
             <div class="m-card-profile__pic">
                 <div class="m-card-profile__pic-wrapper">
-                    <img id="avatar" src="{{$item->avatar}}" alt="{{$item->name}}"/>
+                    <img id="avatar" src="{{\Storage::url($item->avatar)}}" alt="{{$item->name}}"/>
                 </div>
             </div>
             <div class="m-card-profile__details">

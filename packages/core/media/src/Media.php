@@ -643,7 +643,6 @@ class Media
                 ->setFileName(File::name($file->url) . '-' . $size . '.' . File::extension($file->url))
                 ->save();
         }
-
         if (setting('media_watermark_enabled', config('core.media.media.watermark.enabled'))) {
             $image = Image::make($this->getRealPath($file->url));
             $watermark = Image::make($this->getRealPath(setting('media_watermark_source',

@@ -31,32 +31,32 @@ abstract class FormAbstract extends Form
     /**
      * @var array
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * @var string
      */
-    protected $validatorClass = '';
+    protected string $validatorClass = '';
 
     /**
      * @var string
      */
-    protected $actionButtons = '';
+    protected string $actionButtons = '';
 
     /**
      * @var string
      */
-    protected $breakFieldPoint = '';
+    protected string $breakFieldPoint = '';
 
     /**
      * @var string
      */
-    protected $wrapperClass = 'form-body';
+    protected string $wrapperClass = 'form-body';
 
     /**
      * @var string
@@ -66,12 +66,12 @@ abstract class FormAbstract extends Form
     /**
      * @var array
      */
-    protected $metaBoxes = [];
+    protected array $metaBoxes = [];
 
     /**
      * @var string
      */
-    protected $cancelUrl = '/';
+    protected string $cancelUrl = '/';
 
     /**
      * FormAbstract constructor.
@@ -348,7 +348,7 @@ abstract class FormAbstract extends Form
      * @param string $model
      * @return $this
      */
-    protected function setupModel($model)
+    protected function setupModel($model): self
     {
         if (!$this->model) {
             $this->model = $model;
@@ -371,7 +371,7 @@ abstract class FormAbstract extends Form
     /**
      * @return mixed
      */
-    public function getMetaBoxes()
+    public function getMetaBoxes(): mixed
     {
         return $this->metaBoxes;
     }
@@ -396,12 +396,10 @@ abstract class FormAbstract extends Form
      */
     private function getTemplateMetaBox($key): string
     {
-        switch ($key) {
-            case self::META_BOX_SEO;
-                return 'core/base::components.meta_seo';
-            case self::META_BOX_GALLERY:
-                return 'core/base::components.galleries';
-        }
-        return '';
+        return match ($key) {
+            self::META_BOX_SEO => 'core/base::components.meta_seo',
+            self::META_BOX_GALLERY => 'core/base::components.galleries',
+            default => '',
+        };
     }
 }

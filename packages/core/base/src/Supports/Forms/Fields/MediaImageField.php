@@ -10,7 +10,7 @@ class MediaImageField extends FormField
     /**
      * {@inheritDoc}
      */
-    protected function getTemplate()
+    protected function getTemplate(): string
     {
         return 'core/base::forms.fields.media-image';
     }

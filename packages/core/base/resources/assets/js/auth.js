@@ -52,9 +52,9 @@ var BaseAuth = function () {
                 BaseGlobal._callAjax(
                     $(btnUpload).data('url'),
                     'POST',
-                    {"image":img}
+                    {"image":img},
+                    () => window.location.reload(true);
                 );
-                window.location.reload(true);
             });
         });
     };

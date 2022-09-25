@@ -34,7 +34,7 @@
                         <li class="m-nav__item m-topbar__languages m-dropdown m-dropdown--small m-dropdown--arrow m-dropdown--align-right m-dropdown--mobile-full-width" m-dropdown-toggle="click" aria-expanded="true">
                             <a href="javascript:void(0);" class="m-nav__link m-dropdown__toggle">
                                     <span class="m-topbar__userpic pr-2">
-                                        <img alt="" class="m--img-rounded m--marginless" src="{{auth()->user()->avatar}}">
+                                        <img alt="" class="m--img-rounded m--marginless" src="{{\Storage::url(auth()->user()->avatar)}}">
                                     </span>
                                 <span class="m-nav__link-text username">
                                         {{auth()->user()->name}}

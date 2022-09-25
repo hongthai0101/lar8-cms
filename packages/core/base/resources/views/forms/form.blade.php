@@ -20,15 +20,7 @@
                             <div class="clearfix"></div>
                         @endif
                 </x-portlet>
-                {{--@if($form->getMetaBox())--}}
-                    {{--{{ $form->renderMetaBox() }}--}}
-                {{--@endif--}}
                 {!! $form->renderMetaBoxes() !!}
-                {{--@foreach ($form->getMetaBoxes() as $key => $metaBox)--}}
-                    {{--@dd($key)--}}
-                    {{--{!! $form->getMetaBox($key) !!}--}}
-                {{--@endforeach--}}
-
             </div>
             <div class="col-md-3">
                 {!! $form->getActionButtons($form->getCancelUrl()) !!}

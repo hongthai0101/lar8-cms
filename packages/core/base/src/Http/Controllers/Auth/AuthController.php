@@ -2,7 +2,13 @@
 namespace Messi\Base\Http\Controllers\Auth;
 
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use Messi\Base\Http\Controllers\BaseController;
 use Messi\Base\Http\Requests\Auth\PasswordRequest;
 use Messi\Base\Http\Requests\Auth\ProfileRequest;
@@ -14,7 +20,7 @@ class AuthController extends BaseController
     /**
      * @var UserRepository
      */
-    private $repository;
+    private UserRepository $repository;
 
     /**
      * UserController constructor.
@@ -28,9 +34,9 @@ class AuthController extends BaseController
      * Show profile use login
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
-    public function profile(Request $request)
+    public function profile(Request $request): Factory|View
     {
         $item = $request->user();
         return view('core/base::auth.profile', compact('item'));
@@ -40,9 +46,9 @@ class AuthController extends BaseController
      * Auth change profile
      *
      * @param ProfileRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function changeProfile(ProfileRequest $request)
+    public function changeProfile(ProfileRequest $request): RedirectResponse
     {
         $data = $request->validated();
         if ($this->repository->update($data, $request->user()->id)){
@@ -55,9 +61,9 @@ class AuthController extends BaseController
      * Auth change password
      *
      * @param PasswordRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function password(PasswordRequest $request)
+    public function password(PasswordRequest $request): RedirectResponse
     {
         $data = $request->only('password');
         if ($this->repository->update($data, $request->user()->id)){
@@ -71,17 +77,16 @@ class AuthController extends BaseController
      *
      * @param Request $request
      * @param ImageService $imageService
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function avatar(Request $request, ImageService $imageService)
+    public function avatar(Request $request, ImageService $imageService): JsonResponse
     {
         $filename = $imageService->base64($request->image, 'uploads/avatar/');
         if ($filename){
-            $filename = '/' . $filename;
             $this->repository->update(['avatar' => $filename], $request->user()->id);
             return response()->json(
                 [
-                    'data' => $filename,
+                    'data' => Storage::url($filename),
                     'code' => 200
                 ],
                 200);
@@ -91,9 +96,9 @@ class AuthController extends BaseController
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      */
-    public function logout(Request $request)
+    public function logout(Request $request): Redirector|RedirectResponse
     {
         auth()->logout();
         $request->session()->invalidate();

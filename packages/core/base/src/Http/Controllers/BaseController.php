@@ -2,7 +2,9 @@
 
 namespace Messi\Base\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Routing\Redirector;
 use View;
 
 
@@ -11,12 +13,12 @@ class BaseController extends Controller
     /**
      * @var string
      */
-    private $type = 'success';
+    private string $type = 'success';
 
     /**
      * @var string
      */
-    private $msg = 'Action successfully';
+    private string $msg = 'Action successfully';
 
     /**
      * @param $type
@@ -40,9 +42,9 @@ class BaseController extends Controller
 
     /**
      * @param string $route
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      */
-    protected function redirect(string $route)
+    protected function redirect(string $route): Redirector|RedirectResponse
     {
         return redirect($route)->with(['type' => $this->type, 'msg' => $this->msg]);
     }
@@ -58,7 +60,7 @@ class BaseController extends Controller
     /**
      * @param array $breadcrumbs
      */
-    protected function setBreadcrumbs(array $breadcrumbs = [])
+    protected function setBreadcrumbs(array $breadcrumbs = []): void
     {
         View::composer(['core/base::layouts.partials.breadcrumbs'], function ($view) use ($breadcrumbs) {
             $view->with('breadcrumbs', $breadcrumbs);

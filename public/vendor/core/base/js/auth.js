@@ -54,9 +54,7 @@ var BaseAuth = function () {
       }).then(function (img) {
         BaseGlobal._callAjax($(btnUpload).data('url'), 'POST', {
           "image": img
-        });
-
-        window.location.reload(true);
+        }, () => window.location.reload(true));
       });
     });
   };

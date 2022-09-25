@@ -43,7 +43,7 @@ class UserController extends BaseController
      * @param UsersDataTable $userTable
      * @return mixed
      */
-    public function index(UsersDataTable $userTable)
+    public function index(UsersDataTable $userTable): mixed
     {
         $this->setTitle(__('User List'));
         $this->setBreadcrumbs([
@@ -77,7 +77,7 @@ class UserController extends BaseController
      * @param UserRequest $request
      * @return RedirectResponse|Redirector
      */
-    public function store(UserRequest $request)
+    public function store(UserRequest $request): Redirector|RedirectResponse
     {
         /** @var User $user */
         $user = $this->repository->create($request->validated());
@@ -86,20 +86,20 @@ class UserController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return ResponseFactory|Response
      */
-    public function destroy($id)
+    public function destroy(int $id): Response|ResponseFactory
     {
         $this->repository->delete($id);
         return response(['status' => true]);
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return Factory|View
      */
-    public function show($id)
+    public function show(int $id): View|Factory
     {
         $this->setTitle(__('User Information'));
         $this->setBreadcrumbs([
@@ -122,11 +122,11 @@ class UserController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function update($id, Request $request)
+    public function update(int $id, Request $request): Redirector|RedirectResponse
     {
         if ($password = $request->password) {
             $this->repository->update(['password' => $password], $id);
