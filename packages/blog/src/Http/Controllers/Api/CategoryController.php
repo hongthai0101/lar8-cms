@@ -5,9 +5,9 @@ namespace Messi\Blog\Http\Controllers\Api;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Messi\Base\Http\Controllers\Api\ApiController;
-use Messi\Blog\Http\Collections\CategoryCollection;
+use Messi\Blog\Transformers\Collections\CategoryCollection;
 use Messi\Blog\Http\Requests\Api\CategoryRequest;
-use Messi\Blog\Http\Resources\CategoryResource;
+use Messi\Blog\Transformers\Resources\CategoryResource;
 use Messi\Blog\Repositories\Contracts\CategoryRepository;
 
 class CategoryController extends ApiController

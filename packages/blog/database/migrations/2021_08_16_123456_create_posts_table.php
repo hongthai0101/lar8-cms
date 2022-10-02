@@ -20,7 +20,7 @@ class CreatePostsTable extends Migration
             $table->string('description', 400)->nullable();
             $table->string('status', 60)->default('published');
             $table->tinyInteger('order')->default(0);
-            $table->tinyInteger('is_featured')->default(0);
+            $table->boolean('is_featured')->default(false);
             $table->unsignedBigInteger('created_id');
             $table->unsignedBigInteger('updated_id');
             $table->timestamps();

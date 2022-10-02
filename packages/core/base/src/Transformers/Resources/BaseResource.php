@@ -1,6 +1,6 @@
 <?php
 
-namespace Messi\Base\Http\Resources;
+namespace Messi\Base\Transformers\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 

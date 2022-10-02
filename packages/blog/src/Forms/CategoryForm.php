@@ -12,7 +12,7 @@ use Messi\Blog\Repositories\Contracts\CategoryRepository;
 class CategoryForm extends FormAbstract
 {
     /**
-     * @return mixed|void
+     * @return void
      */
     public function buildForm()
     {

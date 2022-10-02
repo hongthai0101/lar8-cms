@@ -2,7 +2,6 @@
 
 namespace Messi\Blog\Http\Controllers\Admin;
 
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -71,24 +70,24 @@ class CategoryController extends BaseController
      * @param CategoryRequest $request
      * @return RedirectResponse|Redirector
      */
-    public function store(CategoryRequest $request)
+    public function store(CategoryRequest $request): Redirector|RedirectResponse
     {
         $this->repository->create($request->validated());
         return $this->redirect(route('admin.categories.index'));
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param FormBuilder $formBuilder
      * @return string
      */
-    public function edit($id, FormBuilder $formBuilder): string
+    public function edit(int $id, FormBuilder $formBuilder): string
     {
         $item = $this->repository->findOrFail($id);
-        $this->setTitle(__('Edit category'));
+        $this->setTitle(__('Edit Category'));
         $this->setBreadcrumbs([
             [
-                'title' => __('Post'),
+                'title' => __('Category'),
                 'url' => route('admin.categories.index')
             ],
             [
@@ -99,21 +98,21 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param CategoryRequest $request
      * @return RedirectResponse|Redirector
      */
-    public function update($id, CategoryRequest $request)
+    public function update(int $id, CategoryRequest $request): Redirector|RedirectResponse
     {
         $this->repository->update($request->validated(), $id);
         return $this->redirect(route('admin.categories.index'));
     }
 
     /**
-     * @param $id
-     * @return ResponseFactory|Response
+     * @param int $id
+     * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): Response
     {
         $this->repository->delete($id);
         return response(['status' => true]);

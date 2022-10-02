@@ -28,7 +28,7 @@ class RoleController extends BaseController
     /**
      * @var RoleRepository
      */
-    private $repository;
+    private RoleRepository $repository;
 
     /**
      * UserController constructor.
@@ -44,7 +44,7 @@ class RoleController extends BaseController
      * @param RoleDataTable $table
      * @return mixed
      */
-    public function index(RoleDataTable $table)
+    public function index(RoleDataTable $table): mixed
     {
         $this->setTitle(__('Role List'));
         $this->setBreadcrumbs([
@@ -78,7 +78,7 @@ class RoleController extends BaseController
      * @param RoleRequest $request
      * @return RedirectResponse|Redirector
      */
-    public function store(RoleRequest $request)
+    public function store(RoleRequest $request): Redirector|RedirectResponse
     {
         $this->repository->create($request->validated());
         return $this->redirect(route('admin.roles.index'));
@@ -88,7 +88,7 @@ class RoleController extends BaseController
      * @param int $id
      * @return Factory|View
      */
-    public function edit(int $id)
+    public function edit(int $id): View|Factory
     {
         /** @var Role $role */
         $role = $this->repository->find($id);
@@ -121,11 +121,11 @@ class RoleController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function update($id, Request $request)
+    public function update(int $id, Request $request): Redirector|RedirectResponse
     {
         /** @var Role $role */
         $role = $this->repository->find($id);
@@ -139,7 +139,7 @@ class RoleController extends BaseController
      * @param int $id
      * @return Factory|View
      */
-    public function show(int $id)
+    public function show(int $id): View|Factory
     {
         /** @var Role $role */
         $role = $this->repository->find($id);
@@ -174,10 +174,10 @@ class RoleController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return ResponseFactory|Response
      */
-    public function destroy($id)
+    public function destroy(int $id): Response|ResponseFactory
     {
         $this->repository->delete($id);
         return response(['status' => true]);

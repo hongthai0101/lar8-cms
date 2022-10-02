@@ -37,7 +37,7 @@ class TagController extends BaseController
      * @param TagDataTable $table
      * @return mixed
      */
-    public function index(TagDataTable $table)
+    public function index(TagDataTable $table): mixed
     {
         $this->setTitle(__('Tag List'));
         $this->setBreadcrumbs([
@@ -71,7 +71,7 @@ class TagController extends BaseController
      * @param TagRequest $request
      * @return RedirectResponse|Redirector
      */
-    public function store(TagRequest $request)
+    public function store(TagRequest $request): Redirector|RedirectResponse
     {
         $this->repository->create($request->validated());
         return $this->redirect(route('admin.tags.index'));
@@ -85,10 +85,10 @@ class TagController extends BaseController
     public function edit(int $id, FormBuilder $formBuilder): string
     {
         $item = $this->repository->findOrFail($id);
-        $this->setTitle(__('Edit tag'));
+        $this->setTitle(__('Edit Tag'));
         $this->setBreadcrumbs([
             [
-                'title' => __('Post'),
+                'title' => __('Tag'),
                 'url' => route('admin.tags.index')
             ],
             [
@@ -99,21 +99,21 @@ class TagController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param TagRequest $request
      * @return RedirectResponse|Redirector
      */
-    public function update($id, TagRequest $request)
+    public function update(int $id, TagRequest $request): Redirector|RedirectResponse
     {
         $this->repository->update($request->validated(), $id);
         return $this->redirect(route('admin.tags.index'));
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return ResponseFactory|Response
      */
-    public function destroy($id)
+    public function destroy(int $id): Response|ResponseFactory
     {
         $this->repository->delete($id);
         return response(['status' => true]);

@@ -2,7 +2,6 @@
 
 namespace Messi\Media\Providers;
 
-use Messi\Base\Supports\Setting;
 use Messi\Base\Traits\LoadPublishServiceTrait;
 use Messi\Media\Chunks\Storage\ChunkStorage;
 use Messi\Media\Commands\ClearChunksCommand;
@@ -19,9 +18,6 @@ use Messi\Media\Repositories\Interfaces\MediaFileInterface;
 use Messi\Media\Repositories\Interfaces\MediaFolderInterface;
 use Messi\Media\Repositories\Interfaces\MediaSettingInterface;
 
-/**
- * @since 02/07/2016 09:50 AM
- */
 class MediaServiceProvider extends ServiceProvider
 {
     use LoadPublishServiceTrait;

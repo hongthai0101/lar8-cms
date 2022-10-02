@@ -1,5 +1,5 @@
 <?php
-namespace Messi\Base\Http\Collections;
+namespace Messi\Base\Transformers\Collections;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Pagination\AbstractPaginator;

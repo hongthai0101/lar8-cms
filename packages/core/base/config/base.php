@@ -7,7 +7,8 @@ return [
         ],
         'sidebar' => [
             'baseSidebar',
-            'blogSidebar'
+            'blogSidebar',
+            'mailSidebar'
         ]
     ],
     'setting' => [

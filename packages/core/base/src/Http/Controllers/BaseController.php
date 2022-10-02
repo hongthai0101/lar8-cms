@@ -7,7 +7,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Routing\Redirector;
 use View;
 
-
 class BaseController extends Controller
 {
     /**

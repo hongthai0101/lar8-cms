@@ -87,7 +87,7 @@ class PostController extends BaseController
     public function edit(int $id, FormBuilder $formBuilder): string
     {
         $item = $this->repository->findOrFail($id);
-        $this->setTitle(__('Edit post'));
+        $this->setTitle(__('Edit Post'));
         $this->setBreadcrumbs([
             [
                 'title' => __('Post'),
@@ -101,22 +101,22 @@ class PostController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param PostRequest $request
      * @param PostService $service
      * @return RedirectResponse|Redirector
      */
-    public function update($id, PostRequest $request, PostService $service)
+    public function update(int $id, PostRequest $request, PostService $service): Redirector|RedirectResponse
     {
         $service->update($id, $request, $this->repository);
         return $this->redirect(route('admin.posts.index'));
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return ResponseFactory|Response
      */
-    public function destroy($id)
+    public function destroy(int $id): Response|ResponseFactory
     {
         $this->repository->delete($id);
         return response(['status' => true]);

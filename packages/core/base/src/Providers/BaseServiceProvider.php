@@ -93,7 +93,6 @@ class BaseServiceProvider extends ServiceProvider
         $this->app->booted(function () {
             config()->set(['auth.providers.users.model' => User::class]);
             config()->set(['auth.guards.api.driver' => 'jwt']);
-
             config()->set(['acl.user' => User::class]);
         });
     }

@@ -4,7 +4,8 @@
         "psr-4": {
             "Messi\\Base\\": "base/src/",
             "Messi\\JsValidation\\": "js-validation/src/",
-            "Messi\\Media\\": "media/src/"
+            "Messi\\Media\\": "media/src/",
+            "Messi\\Email\\": "email/src/"
         },
         "files": [
             "base/helpers/common.php",
@@ -36,7 +37,8 @@
                 "Messi\\Base\\Providers\\BaseServiceProvider",
                 "Messi\\Base\\Providers\\FormServiceProvider",
                 "Messi\\JsValidation\\Providers\\JsValidationServiceProvider",
-                "Messi\\Media\\Providers\\MediaServiceProvider"
+                "Messi\\Media\\Providers\\MediaServiceProvider",
+                "Messi\\Email\\Providers\\MailServiceProvider"
             ],
             "aliases": {
                 "JsValidator": "Messi\\JsValidation\\Facades\\JsValidatorFacade",
