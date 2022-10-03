@@ -23,7 +23,7 @@ class MailTemplateForm extends FormAbstract
         $item = $this->model;
         $statuses = MasterData::statuses();
         $replaces = [];
-        if ($item) {
+        if ($item && class_exists($item->mailable)) {
             foreach (($item->mailable)::getVariables() as $replace) {
                 $replaces[$replace] = $replace;
             }
