@@ -90,7 +90,16 @@ abstract class TemplateMailable extends Mailable
      */
     public function getHtmlLayout(): ?string
     {
-        return '<header>Site name!</header>{{{ body }}}<footer>Copyright 2022</footer>';
+        $mailTemplate = $this->getMailTemplate();
+        $isHeader = $mailTemplate->is_header;
+        $isFooter = $mailTemplate->is_footer;
+        if ($isHeader || $isFooter) {
+            $header = $isHeader ? \File::get(config('core.email.mail-template.setting.header')) : '';
+            $footer = $isFooter ? \File::get(config('core.email.mail-template.setting.footer')) : '';
+
+            return $header . '{{{ body }}}' . $footer;
+        }
+        return null;
     }
 
     /**
@@ -98,6 +107,15 @@ abstract class TemplateMailable extends Mailable
      */
     public function getTextLayout(): ?string
     {
+        $mailTemplate = $this->getMailTemplate();
+        $isHeader = $mailTemplate->is_header;
+        $isFooter = $mailTemplate->is_footer;
+        if ($isHeader || $isFooter) {
+            $header = $isHeader ? \File::get(config('core.email.mail-template.setting.header')) : '';
+            $footer = $isFooter ? \File::get(config('core.email.mail-template.setting.footer')) : '';
+
+            return $header . '{{{ body }}}' . $footer;
+        }
         return null;
     }
 

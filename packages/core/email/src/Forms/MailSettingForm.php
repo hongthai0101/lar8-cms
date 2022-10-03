@@ -19,23 +19,25 @@ class MailSettingForm extends FormAbstract
             ->setupModel(new MailTemplate())
             ->setValidatorClass(MailSettingRequest::class)
             ->setFormOption('url', $url)
-            ->setCancelUrl(route('admin.mail-templates.setting'))
+            ->setCancelUrl(route('admin.mail-setting.index'))
             ->addCustomField('editor', EditorField::class)
-            ->add('footer', 'editor', [
-                'label'      => __('Footer Template'),
-                'label_attr' => ['class' => 'control-label'],
-                'attr'       => [
-                    'rows'            => 4,
-                    'placeholder'     => __('Footer Template')
-                ],
-            ])
             ->add('header', 'editor', [
                 'label'      => __('Header Template'),
                 'label_attr' => ['class' => 'control-label'],
                 'attr'       => [
-                    'rows'            => 4,
+                    'rows'            => 2,
                     'placeholder'     => __('Header Template')
                 ],
+                'value' => \File::get(config('core.email.mail-template.setting.header'))
+            ])
+            ->add('footer', 'editor', [
+                'label'      => __('Footer Template'),
+                'label_attr' => ['class' => 'control-label'],
+                'attr'       => [
+                    'rows'            => 2,
+                    'placeholder'     => __('Footer Template')
+                ],
+                'value' => \File::get(config('core.email.mail-template.setting.footer'))
             ]);
 
     }

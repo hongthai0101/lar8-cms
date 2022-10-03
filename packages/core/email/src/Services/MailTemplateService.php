@@ -8,7 +8,7 @@ use Messi\Email\Http\Requests\Admin\MailTemplateRequest;
 use Messi\Email\Models\MailTemplate;
 use Messi\Email\Repositories\Contracts\MailTemplateRepository;
 
-class MailService
+class MailTemplateService
 {
     /**
      * @var MailTemplateRepository

@@ -2,7 +2,6 @@
 namespace Messi\Email\Http\Requests\Admin;
 
 use Messi\Base\Http\Requests\BaseRequest;
-use Messi\Base\Types\MasterData;
 
 class MailSettingRequest extends BaseRequest
 {
@@ -14,14 +13,8 @@ class MailSettingRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name'            => 'required|max:60|min:2',
-            'description'     => 'nullable|string|min:1|max:255',
-            'subject'         => 'required|max:100|min:2',
-            'html_template'   => 'required',
-            'text_template'   => 'required',
-            'is_header'       => 'nullable',
-            'is_footer'       => 'nullable',
-            'field_replace_to_content' => 'nullable',
+            'footer'            => 'required|min:2',
+            'header'         => 'required|min:2'
         ];
     }
 }

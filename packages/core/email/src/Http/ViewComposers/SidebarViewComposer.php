@@ -19,7 +19,8 @@ class SidebarViewComposer
                 'icon'        => 'fa fa-camera-retro',
                 'permissions' => ['viewAny-mailtemplate'],
                 'selected' => [
-                    'admin.mail-templates'
+                    'admin.mail-templates',
+                    'admin.mail-setting'
                 ],
                 'subs' => [
                     [
@@ -37,7 +38,7 @@ class SidebarViewComposer
                         'url' => route('admin.mail-setting.index'),
                         'permissions' => ['viewAny-mailtemplate'],
                         'selected' => [
-                            'admin.mail-setting.index'
+                            'admin.mail-setting'
                         ]
                     ]
                 ],

@@ -9,6 +9,7 @@ use Messi\Base\Supports\Forms\FormBuilder;
 use Messi\Base\Traits\ControllerTrait;
 use Messi\Email\Forms\MailSettingForm;
 use Messi\Email\Http\Requests\Admin\MailSettingRequest;
+use Messi\Email\Services\MailSettingService;
 
 class MailSettingController extends BaseController
 {
@@ -27,14 +28,14 @@ class MailSettingController extends BaseController
      */
     public function index(FormBuilder $formBuilder): mixed
     {
-        $this->setTitle(__('Create Mail Template'));
+        $this->setTitle(__('Mail Setting'));
         $this->setBreadcrumbs([
             [
-                'title' => __('Mail Template'),
-                'url' => route('admin.mail-templates.index')
+                'title' => __('Mail Setting'),
+                'url' => route('admin.mail-setting.index')
             ],
             [
-                'title' => __('Create Mail Template'),
+                'title' => __('Mail Setting'),
             ]
         ]);
         return $formBuilder->create(MailSettingForm::class)->renderForm();
@@ -46,6 +47,8 @@ class MailSettingController extends BaseController
      */
     public function update(MailSettingRequest $request): Redirector|RedirectResponse
     {
-        return $this->redirect(route('admin.mail-templates.index'));
+        $service = new MailSettingService();
+        $service->update($request);
+        return $this->redirect(route('admin.mail-setting.index'));
     }
 }

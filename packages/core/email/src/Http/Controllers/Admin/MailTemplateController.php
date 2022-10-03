@@ -14,7 +14,7 @@ use Messi\Email\DataTables\MailTemplateDataTable;
 use Messi\Email\Forms\MailTemplateForm;
 use Messi\Email\Http\Requests\Admin\MailTemplateRequest;
 use Messi\Email\Repositories\Contracts\MailTemplateRepository;
-use Messi\Email\Services\MailService;
+use Messi\Email\Services\MailTemplateService;
 
 class MailTemplateController extends BaseController
 {
@@ -71,10 +71,10 @@ class MailTemplateController extends BaseController
 
     /**
      * @param MailTemplateRequest $request
-     * @param MailService $service
+     * @param MailTemplateService $service
      * @return RedirectResponse|Redirector
      */
-    public function store(MailTemplateRequest $request, MailService $service): Redirector|RedirectResponse
+    public function store(MailTemplateRequest $request, MailTemplateService $service): Redirector|RedirectResponse
     {
         $result = $service->store($request);
         $route = route('admin.mail-templates.index');
@@ -113,17 +113,17 @@ class MailTemplateController extends BaseController
      */
     public function update(int $id, MailTemplateRequest $request): Redirector|RedirectResponse
     {
-        $mailService = new MailService($this->repository);
+        $mailService = new MailTemplateService($this->repository);
         $mailService->update($id, $request);
         return $this->redirect(route('admin.mail-templates.index'));
     }
 
     /**
      * @param int $id
-     * @param MailService $service
+     * @param MailTemplateService $service
      * @return Response
      */
-    public function destroy(int $id, MailService $service): Response
+    public function destroy(int $id, MailTemplateService $service): Response
     {
         $result = $service->destroy($id);
         return response(['status' => $result]);
@@ -164,7 +164,7 @@ class MailTemplateController extends BaseController
      */
     public function show(int $id, Request $request): Redirector|RedirectResponse
     {
-        $service = new MailService($this->repository);
+        $service = new MailTemplateService($this->repository);
         $service->sendTest($id);
         return $this->redirect(route('admin.mail-templates.index'));
     }
@@ -175,7 +175,7 @@ class MailTemplateController extends BaseController
      */
     public function suggestFillable(Request $request): Response
     {
-        $service = new MailService($this->repository);
+        $service = new MailTemplateService($this->repository);
         $fillable = $service->getSuggestFillable();
         $input = $request->input('q');
         $result = array_filter($fillable, function ($item) use ($input) {
