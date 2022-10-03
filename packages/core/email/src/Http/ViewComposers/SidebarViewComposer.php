@@ -15,8 +15,8 @@ class SidebarViewComposer
     {
         $sidebars = [
             [
-                'title'        => __('Mail Template'),
-                'icon'        => 'fa fa-camera-retro',
+                'title'        => __('Mail Setting'),
+                'icon'        => 'fa flaticon-multimedia-3',
                 'permissions' => ['viewAny-mailtemplate'],
                 'selected' => [
                     'admin.mail-templates',
@@ -28,9 +28,7 @@ class SidebarViewComposer
                         'url' => route('admin.mail-templates.index'),
                         'permissions' => ['viewAny-mailtemplate'],
                         'selected' => [
-                            'admin.mail-templates.index',
-                            'admin.mail-templates.create',
-                            'admin.mail-templates.edit'
+                            'admin.mail-templates'
                         ]
                     ],
                     [

@@ -4,6 +4,7 @@ namespace Messi\Email\Providers;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Messi\Base\Traits\LoadPublishServiceTrait;
+use Messi\Email\Commands\MailableCommand;
 use Messi\Email\Http\ViewComposers\SidebarViewComposer;
 use Messi\Email\Repositories\Contracts\MailTemplateRepository;
 use Messi\Email\Repositories\Eloquent\MailTemplateRepositoryEloquent;
@@ -37,6 +38,10 @@ class MailServiceProvider extends ServiceProvider
             ->loadPublishViews()
             ->loadRoutes()
             ->publishAssets();
+
+        $this->commands([
+            MailableCommand::class
+        ]);
 
         $config = $this->app->make('config');
         $config->set([

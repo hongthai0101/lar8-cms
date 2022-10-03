@@ -2,6 +2,7 @@
 
 namespace Messi\Email\Services;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Messi\Email\Http\Requests\Admin\MailTemplateRequest;
@@ -47,13 +48,18 @@ class MailTemplateService
 
     /**
      * @param int $id
-     * @return int
+     * @return bool
      */
-    public function destroy(int $id): int
+    public function destroy(int $id): bool
     {
         $item = $this->repository->find($id);
-        $this->removeMailClass($item);
-        return $this->repository->delete($id);
+        $isCanDelete = $item->is_can_delete;
+        if ($isCanDelete) {
+            $this->removeMailClass($item);
+            $this->repository->delete($id);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -78,14 +84,45 @@ class MailTemplateService
         return true;
     }
 
-    public function sendTest(int $id)
+    /**
+     * @param int $id
+     * @return array
+     */
+    public function getDataShow(int $id): array
     {
         $item = $this->repository->find($id);
-        $email = 'thailh.work@gmail.com';
+        $fields = [];
+        $content = '';
         if (class_exists($item->mailable)) {
             $fields = ($item->mailable)::getVariables();
-            Mail::to($email)->send(new ($item->mailable)('123', 'thaile'));
+            $fillable = [];
+            foreach ($fields as $field) {
+                $fillable[$field] = "{{ $field }}";
+            }
+            $content = (new ($item->mailable)($fillable))->render();
         }
+        return ['fields' => $fields, 'content' => $content];
+    }
+
+    /**
+     * @param int $id
+     * @param array $params
+     * @return bool
+     */
+    public function sendTest(int $id, array $params): bool
+    {
+        $emailAddress = array_shift($params);
+        $fillable = [];
+        foreach ($params as $param) {
+            $fillable[$param['name']] = $param['value'];
+        }
+        $item = $this->repository->find($id);
+        $email = Arr::get($emailAddress, 'value');
+        if ($email && class_exists($item->mailable)) {
+            Mail::to($email)->send(new ($item->mailable)($fillable));
+            return true;
+        }
+        return false;
     }
 
     /**

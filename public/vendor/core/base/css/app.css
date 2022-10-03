@@ -19,3 +19,6 @@
 .core-custom-form .m-portlet .m-portlet__head {
   height: 3.2rem;
 }
+.blockUI {
+    z-index: 1051 !important;
+}

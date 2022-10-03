@@ -19,6 +19,17 @@ abstract class TemplateMailable extends Mailable
     protected MailTemplateInterface $mailTemplate;
 
     /**
+     * @param array $data
+     * @return void
+     */
+    protected function setData(array $data = [])
+    {
+        foreach ($data as $field => $item) {
+            $this->{$field} = $item;
+        }
+    }
+
+    /**
      * @return array
      */
     public static function getVariables(): array

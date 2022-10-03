@@ -45,6 +45,7 @@ class MailTemplateDataTable extends DataTableAbstract
                         'type' => 'destroy',
                         'route' => route('admin.mail-templates.destroy', $item->id),
                         'permission' => 'delete-mailtemplate',
+                        'isDisplay' => $item->is_can_delete
                     ]
                 ]);
             })
@@ -65,7 +66,8 @@ class MailTemplateDataTable extends DataTableAbstract
                 'mail_templates.name',
                 'users.name as author',
                 'mail_templates.created_at',
-                'mail_templates.status'
+                'mail_templates.status',
+                'is_can_delete'
             ]);
         return $this->applyScopes($query);
     }

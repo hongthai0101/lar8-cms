@@ -2,6 +2,9 @@
 
 namespace Messi\Email\Http\Controllers\Admin;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -160,13 +163,24 @@ class MailTemplateController extends BaseController
     /**
      * @param int $id
      * @param Request $request
-     * @return Redirector|RedirectResponse
+     * @return Application|Factory|View
      */
-    public function show(int $id, Request $request): Redirector|RedirectResponse
+    public function show(int $id, Request $request): Application|Factory|View
     {
+        $this->setTitle(__('Show Mail Template'));
+        $this->setBreadcrumbs([
+            [
+                'title' => __('Mail Template'),
+                'url' => route('admin.mail-templates.index')
+            ],
+            [
+                'title' => __('Show Template'),
+            ]
+        ]);
+
         $service = new MailTemplateService($this->repository);
-        $service->sendTest($id);
-        return $this->redirect(route('admin.mail-templates.index'));
+        $result = $service->getDataShow($id);
+        return view('core/email::show', $result + ['id' => $id]);
     }
 
     /**
@@ -189,5 +203,17 @@ class MailTemplateController extends BaseController
             ];
         }
         return response(['data' => $response]);
+    }
+
+    /**
+     * @param int $id
+     * @param Request $request
+     * @return Response
+     */
+    public function testSend(int $id, Request $request): Response
+    {
+        $service = new MailTemplateService($this->repository);
+        $result = $service->sendTest($id, $request->input('data'));
+        return response(['data' => $result]);
     }
 }

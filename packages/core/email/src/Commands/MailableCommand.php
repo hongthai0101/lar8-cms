@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Messi\Email\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 
-class Mailable extends GeneratorCommand
+class MailableCommand extends GeneratorCommand
 {
     public function __construct(Filesystem $files)
     {
@@ -90,8 +91,8 @@ class Mailable extends GeneratorCommand
         $mapPublicFields = $this->makeMapPublicFields($inputFields);
 
         return str_replace(
-            ['$CLASS$', '$PUBLIC_FIELDS$', '$FIELDS$', '$MAP_PUBLIC_FIELDS$'],
-            [$this->mailClass, $publicFields, $fields, $mapPublicFields],
+            ['$CLASS$', '$PUBLIC_FIELDS$'],
+            [$this->mailClass, $publicFields],
             $stub
         );
     }
@@ -134,11 +135,11 @@ class Mailable extends GeneratorCommand
     private function makePublicFields(array $fields): string
     {
         $results = '';
-        if (empty($fields)) return $results;
-
-        foreach ($fields as $field) {
-            $publicField = trim($field);
-            $results .= "public mixed $$publicField" . ';' . PHP_EOL . "\t";
+        if (!empty($fields) && Arr::get($fields, 0) !== "") {
+            foreach ($fields as $field) {
+                $publicField = trim($field);
+                $results .= "public mixed $$publicField" . ';' . PHP_EOL . "\t";
+            }
         }
         return $results;
     }
@@ -166,11 +167,11 @@ class Mailable extends GeneratorCommand
     private function makeMapPublicFields(array $fields): string
     {
         $results = '';
-        if (empty($fields)) return $results;
-
-        foreach ($fields as $field) {
-            $publicField = trim($field);
-            $results .= '$this->' . $publicField . ' = ' . "$$publicField" . ';' . PHP_EOL . "\t\t";
+        if (!empty($fields) && Arr::get($fields, 0) !== "") {
+            foreach ($fields as $field) {
+                $publicField = trim($field);
+                $results .= '$this->' . $publicField . ' = ' . "$$publicField" . ';' . PHP_EOL . "\t\t";
+            }
         }
         return $results;
     }

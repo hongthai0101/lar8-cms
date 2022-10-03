@@ -17,8 +17,8 @@ class $CLASS$ extends TemplateMailable
     use Queueable, SerializesModels;
 
     $PUBLIC_FIELDS$
-    public function __construct($FIELDS$)
+    public function __construct(array $params = [])
     {
-        $MAP_PUBLIC_FIELDS$
+        $this->setData($params);
     }
 }

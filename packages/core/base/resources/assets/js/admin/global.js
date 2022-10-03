@@ -5,20 +5,21 @@ BaseGlobal = function () {
             type: method,
             data: params,
             beforeSend: function beforeSend() {
-                //mApp.blockPage(InitGlobal.blockPage);
+                mApp.blockPage(InitGlobal.blockPage);
             },
             success: function success(response) {
                 mApp.unblockPage();
                 if (callbackSuccess) {
                     eval(callbackSuccess)(response);
                 }
-
             },
             error: function error(jqXHR, exception) {
-                //mApp.unblockPage();
                 if (callbackError) {
                     eval(callbackError)(jqXHR);
                 }
+            },
+            complete: function (xhr,status) {
+                mApp.unblockPage(InitGlobal.blockPage);
             }
         });
     };
