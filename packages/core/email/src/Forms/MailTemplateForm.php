@@ -61,7 +61,7 @@ class MailTemplateForm extends FormAbstract
             ])
             ->add('field_replace_to_content', 'autocomplete', [
                 'label'      => __('Field Replace To Content'),
-                'label_attr' => ['class' => 'control-label required'],
+                'label_attr' => ['class' => 'control-label'],
                 'attr'       => [
                     'id'    => 'field_replace_to_content_select2',
                     'data-url' => route('admin.mail-templates.suggest-fillable'),
@@ -73,7 +73,7 @@ class MailTemplateForm extends FormAbstract
             ])
             ->add('text_template', 'textarea', [
                 'label'      => __('Text Template'),
-                'label_attr' => ['class' => 'control-label'],
+                'label_attr' => ['class' => 'control-label required'],
                 'attr'       => [
                     'rows'         => 3,
                     'placeholder'  => __('Text Template')
@@ -88,7 +88,7 @@ class MailTemplateForm extends FormAbstract
         }
         $this->add('html_template', 'editor', [
             'label'      => __('Html Template'),
-            'label_attr' => ['class' => 'control-label'],
+            'label_attr' => ['class' => 'control-label required'],
             'attr'       => [
                 'rows'            => 4,
                 'placeholder'     => __('Html Template')

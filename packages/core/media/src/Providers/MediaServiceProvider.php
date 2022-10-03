@@ -2,6 +2,7 @@
 
 namespace Messi\Media\Providers;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Messi\Base\Traits\LoadPublishServiceTrait;
 use Messi\Media\Chunks\Storage\ChunkStorage;
 use Messi\Media\Commands\ClearChunksCommand;
@@ -36,6 +37,10 @@ class MediaServiceProvider extends ServiceProvider
         AliasLoader::getInstance()->alias('Media', MediaFacade::class);
     }
 
+    /**
+     * @throws BindingResolutionException
+     * @throws \Exception
+     */
     public function boot()
     {
         $this->setNamespace('core/media')

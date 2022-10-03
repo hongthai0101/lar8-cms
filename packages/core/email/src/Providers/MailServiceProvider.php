@@ -54,7 +54,6 @@ class MailServiceProvider extends ServiceProvider
             'mail.from.address' => setting('__mail_from_address__', $config->get('mail.from.address')),
             'mail.from.name' => setting('__mail_from_name__', $config->get('mail.from.name'))
         ]);
-
         View::composer(
             'core/base::layouts.partials.sidebar', SidebarViewComposer::class
         );

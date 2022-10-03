@@ -15,3 +15,7 @@
 .blockUI {
     z-index: 1051 !important;
 }
+label.required:after {
+    content: '*';
+    color: red;
+}

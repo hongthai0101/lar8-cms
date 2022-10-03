@@ -2,9 +2,6 @@
     <div class="col-6">
         <button type="button" class="btn btn-accent btn-update-field" data-url="{{$fieldUrl}}">@lang('Update Field')</button>
     </div>
-    <div class="col-6" style="text-align: end">
-        <button type="button" class="btn btn-accent btn-test-send">@lang('Test')</button>
-    </div>
 </div>
 
 @push('footer')

@@ -14,7 +14,7 @@
 
             <div class="modal-footer">
                 <button class="float-left btn btn-warning" data-dismiss="modal">@lang('Cancel')</button>
-                <a class="float-right btn btn-{{ $type }}" id="{{ $action_id }}" href="#">{!! $action_name !!}</a>
+                <button class="float-right btn btn-{{ $type }}" id="{{ $action_id }}" href="#">{!! $action_name !!}</button>
             </div>
         </div>
     </div>
