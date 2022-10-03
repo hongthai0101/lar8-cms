@@ -19,9 +19,28 @@ class SidebarViewComposer
                 'icon'        => 'fa fa-camera-retro',
                 'permissions' => ['viewAny-mailtemplate'],
                 'selected' => [
-                    'admin.emails'
+                    'admin.mail-templates'
                 ],
-                'url' => route('admin.mail-templates.index'),
+                'subs' => [
+                    [
+                        'title' => __('Template'),
+                        'url' => route('admin.mail-templates.index'),
+                        'permissions' => ['viewAny-mailtemplate'],
+                        'selected' => [
+                            'admin.mail-templates.index',
+                            'admin.mail-templates.create',
+                            'admin.mail-templates.edit'
+                        ]
+                    ],
+                    [
+                        'title' => __('Setting'),
+                        'url' => route('admin.mail-setting.index'),
+                        'permissions' => ['viewAny-mailtemplate'],
+                        'selected' => [
+                            'admin.mail-setting.index'
+                        ]
+                    ]
+                ],
                 'position' => 5
             ]
         ];

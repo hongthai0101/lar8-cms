@@ -3,6 +3,7 @@ namespace Messi\Email\Models;
 
 use Illuminate\Contracts\Mail\Mailable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Messi\Base\Models\BaseModel;
 use Messi\Base\Traits\ModelTrait;
 use Messi\Email\Exceptions\MissingMailTemplate;
@@ -10,7 +11,7 @@ use Messi\Email\Interfaces\MailTemplateInterface;
 
 class MailTemplate extends BaseModel implements MailTemplateInterface
 {
-    use ModelTrait;
+    use ModelTrait, SoftDeletes;
 
     protected $table = 'mail_templates';
     /**
@@ -38,6 +39,7 @@ class MailTemplate extends BaseModel implements MailTemplateInterface
         'status',
         'is_footer',
         'is_header',
+        'is_can_delete',
         'fields',
         'created_id',
         'updated_id'
@@ -46,6 +48,8 @@ class MailTemplate extends BaseModel implements MailTemplateInterface
     protected $casts = [
         'is_footer' => 'boolean',
         'is_header' => 'boolean',
+        'is_can_delete' => 'boolean',
+        'fields' => 'array'
     ];
 
     protected $guarded = [];

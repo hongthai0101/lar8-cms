@@ -24,10 +24,12 @@ return new class extends Migration
             $table->string('status', 60)->default('published');
             $table->boolean('is_footer')->default(true);
             $table->boolean('is_header')->default(true);
+            $table->boolean('is_can_delete')->default(true);
             $table->json('fields')->nullable();
             $table->unsignedBigInteger('created_id');
             $table->unsignedBigInteger('updated_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

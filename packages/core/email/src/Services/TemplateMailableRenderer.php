@@ -12,12 +12,25 @@ class TemplateMailableRenderer
     public const RENDER_HTML_LAYOUT = 0;
     public const RENDER_TEXT_LAYOUT = 1;
 
+    /**
+     * @var TemplateMailable
+     */
     protected TemplateMailable $templateMailable;
 
+    /**
+     * @var MailTemplateInterface
+     */
     protected MailTemplateInterface $mailTemplate;
 
-    protected mixed $mustache;
+    /**
+     * @var Mustache_Engine
+     */
+    protected Mustache_Engine $mustache;
 
+    /**
+     * @param TemplateMailable $templateMailable
+     * @param Mustache_Engine $mustache
+     */
     public function __construct(TemplateMailable $templateMailable, Mustache_Engine $mustache)
     {
         $this->templateMailable = $templateMailable;
@@ -25,6 +38,11 @@ class TemplateMailableRenderer
         $this->mailTemplate = $templateMailable->getMailTemplate();
     }
 
+    /**
+     * @param array $data
+     * @return string
+     * @throws CannotRenderTemplateMailable
+     */
     public function renderHtmlLayout(array $data = []): string
     {
         $body = $this->mustache->render(
@@ -35,6 +53,11 @@ class TemplateMailableRenderer
         return $this->renderInLayout($body, static::RENDER_HTML_LAYOUT, $data);
     }
 
+    /**
+     * @param array $data
+     * @return string|null
+     * @throws CannotRenderTemplateMailable
+     */
     public function renderTextLayout(array $data = []): ?string
     {
         if (! $this->mailTemplate->getTextTemplate()) {
@@ -49,6 +72,10 @@ class TemplateMailableRenderer
         return $this->renderInLayout($body, static::RENDER_TEXT_LAYOUT, $data);
     }
 
+    /**
+     * @param array $data
+     * @return string
+     */
     public function renderSubject(array $data = []): string
     {
         return $this->mustache->render(
@@ -57,6 +84,13 @@ class TemplateMailableRenderer
         );
     }
 
+    /**
+     * @param string $body
+     * @param int $layoutType
+     * @param array $data
+     * @return string
+     * @throws CannotRenderTemplateMailable
+     */
     protected function renderInLayout(string $body, int $layoutType, array $data = []): string
     {
         $method = $layoutType === static::RENDER_HTML_LAYOUT ? 'getHtmlLayout' : 'getTextLayout';
@@ -71,6 +105,11 @@ class TemplateMailableRenderer
         return $this->mustache->render($layout, $data);
     }
 
+    /**
+     * @param string $layout
+     * @return void
+     * @throws CannotRenderTemplateMailable
+     */
     protected function guardAgainstInvalidLayout(string $layout): void
     {
         if (! Str::contains($layout, [

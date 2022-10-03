@@ -6,7 +6,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Arr;
 use Messi\Base\Http\Controllers\BaseController;
 use Messi\Base\Supports\Forms\FormBuilder;
 use Messi\Base\Traits\ControllerTrait;
@@ -92,9 +92,6 @@ class MailTemplateController extends BaseController
      */
     public function edit(int $id, FormBuilder $formBuilder): string
     {
-        //$ser = new MailService($this->repository);
-        //$ser->update($id);
-
         $item = $this->repository->findOrFail($id);
         $this->setTitle(__('Edit Mail Template'));
         $this->setBreadcrumbs([
@@ -116,7 +113,8 @@ class MailTemplateController extends BaseController
      */
     public function update(int $id, MailTemplateRequest $request): Redirector|RedirectResponse
     {
-        $this->repository->update($request->validated(), $id);
+        $mailService = new MailService($this->repository);
+        $mailService->update($id, $request);
         return $this->redirect(route('admin.mail-templates.index'));
     }
 
@@ -131,13 +129,6 @@ class MailTemplateController extends BaseController
         return response(['status' => $result]);
     }
 
-    public function show(int $id)
-    {
-        $mailTemplate = $this->repository->find($id);
-        $email = 'thailh.work@gmail.com';
-        Mail::to($email)->send(new ($mailTemplate->mailable)('123'));
-    }
-
     /**
      * @param int $id
      * @param Request $request
@@ -148,7 +139,55 @@ class MailTemplateController extends BaseController
         $data = $request->input('data');
         if (empty($data)) return response(['status' =>  false]);
 
-        $this->repository->update(['fields' => $data], $id);
+        $fields = [];
+        foreach (array_chunk($data, 3) as $chunk) {
+            $fields[] = [
+                'field' =>  Arr::get(Arr::first($chunk, function ($item) {
+                    return$item['name'] === 'field';
+                }), 'value'),
+                'model' =>  Arr::get(Arr::first($chunk, function ($item) {
+                    return$item['name'] === 'model';
+                }), 'value'),
+                'fillable' => Arr::get(Arr::first($chunk, function ($item) {
+                    return$item['name'] === 'fillable';
+                }), 'value'),
+            ];
+        }
+        $this->repository->update(['fields' => $fields], $id);
         return response(['status' =>  true]);
+    }
+
+    /**
+     * @param int $id
+     * @param Request $request
+     * @return Redirector|RedirectResponse
+     */
+    public function show(int $id, Request $request): Redirector|RedirectResponse
+    {
+        $service = new MailService($this->repository);
+        $service->sendTest($id);
+        return $this->redirect(route('admin.mail-templates.index'));
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function suggestFillable(Request $request): Response
+    {
+        $service = new MailService($this->repository);
+        $fillable = $service->getSuggestFillable();
+        $input = $request->input('q');
+        $result = array_filter($fillable, function ($item) use ($input) {
+            return stripos($item, $input) !== false;
+        });
+        $response = [];
+        foreach ($result as $item) {
+            $response[] = [
+                'id' => $item,
+                'name' => $item
+            ];
+        }
+        return response(['data' => $response]);
     }
 }

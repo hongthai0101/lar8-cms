@@ -13,7 +13,7 @@
             </div>
 
             <div class="modal-footer">
-                <button class="float-left btn btn-warning" data-dismiss="modal">{{ trans('core/base::tables.cancel') }}</button>
+                <button class="float-left btn btn-warning" data-dismiss="modal">@lang('Cancel')</button>
                 <a class="float-right btn btn-{{ $type }}" id="{{ $action_id }}" href="#">{!! $action_name !!}</a>
             </div>
         </div>

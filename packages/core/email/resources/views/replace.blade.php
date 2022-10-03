@@ -18,10 +18,10 @@
         $( document ).ready(function() {
             $('.view_data_param').click(function(){
                 var param = $(this).attr('param-key');
-                output = `\{\{ $` + param + ` \}\}`;
+                output = `\{\{ ` + param + ` \}\}`;
 
                 if ( $(this).hasClass('is-attribute') ){
-                    var output = `\{\{ $` + $(this).attr('param-parent-key') + '->' + param + ` \}\}`;
+                    var output = `\{\{ ` + $(this).attr('param-parent-key') + '->' + param + ` \}\}`;
                 }
                 tinymce.activeEditor.selection.setContent(output);
             });

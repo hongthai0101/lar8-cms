@@ -5,6 +5,7 @@ namespace Messi\Email\Services;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\HtmlString;
+use Messi\Email\Exceptions\CannotRenderTemplateMailable;
 use Messi\Email\Models\MailTemplate;
 use ReflectionClass;
 use ReflectionProperty;
@@ -44,6 +45,7 @@ abstract class TemplateMailable extends Mailable
     /**
      * @return array
      * @throws \ReflectionException
+     * @throws CannotRenderTemplateMailable
      */
     protected function buildView(): array
     {
@@ -53,7 +55,6 @@ abstract class TemplateMailable extends Mailable
 
         $html = $renderer->renderHtmlLayout($viewData);
         $text = $renderer->renderTextLayout($viewData);
-
         return array_filter([
             'html' => new HtmlString($html),
             'text' => new HtmlString($text),
@@ -89,7 +90,7 @@ abstract class TemplateMailable extends Mailable
      */
     public function getHtmlLayout(): ?string
     {
-        return null;
+        return '<header>Site name!</header>{{{ body }}}<footer>Copyright 2022</footer>';
     }
 
     /**

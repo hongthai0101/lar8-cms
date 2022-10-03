@@ -1,11 +1,12 @@
 @include('core/base::forms.partials.custom-select')
 
 @once
-    @push('footer')
+    @push('javascript')
         <script>
             "use strict";
             $('#' + '{{ Arr::get($selectAttributes, 'id') }}').select2({
                 minimumInputLength: 2,
+                multiple: {{ Arr::get($selectAttributes, 'multiple', false) }},
                 ajax: {
                     url: '{{ Arr::get($selectAttributes, 'data-url') }}',
                     quietMillis: 500,

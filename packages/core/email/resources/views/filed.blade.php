@@ -1,26 +1,26 @@
 <div class="row">
     <div class="col-6">
-        <button type="button" class="btn btn-accent btn-updated-field" data-url="{{$fieldUrl}}">@lang('Update Field')</button>
+        <button type="button" class="btn btn-accent btn-update-field" data-url="{{$fieldUrl}}">@lang('Update Field')</button>
     </div>
     <div class="col-6" style="text-align: end">
-        <button type="button" class="btn btn-accent btn-updated-field">@lang('Test Send')</button>
+        <button type="button" class="btn btn-accent btn-test-send">@lang('Test')</button>
     </div>
 </div>
 
 @push('footer')
     {!! Form::modalAction(
-    'updated-field',
-    'Test',
+    'modal-update-field',
+    __('Map Filed To Content'),
     'info',
-    view('core/email::updated-field', compact('replaces', 'models')),
+    view('core/email::updated-field', compact('replaces', 'models', 'fields')),
     'updated_action_id',
     __('Save')
     ) !!}
     @push('javascript')
         <script type = "text/javascript">
             $( document ).ready(function() {
-                $('.btn-updated-field').off().on('click', function () {
-                    $('#updated-field').modal('show')
+                $('.btn-update-field').off().on('click', function () {
+                    $('#modal-update-field').modal('show')
                 });
 
                 $('.select-update-field').off().on('change', function () {
@@ -34,14 +34,14 @@
                 });
 
                 $('#updated_action_id').off().on('click', function () {
-                    var url = $('.btn-updated-field').data('url');
+                    var url = $('.btn-update-field').data('url');
                     var form = $('#form-mail-template-update-field');
                     BaseGlobal._callAjax(
                         url,
                         'POST',
                         {data: form.serializeArray()},
-                        () => $('#updated-field').modal('hide'),
-                        () => alert(1111)
+                        () => $('#modal-update-field').modal('hide'),
+                        () => alert('Something went wrong!')
                 );
 
                 });
