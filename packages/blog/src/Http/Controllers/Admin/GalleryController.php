@@ -37,7 +37,7 @@ class GalleryController extends BaseController
      * @param GalleryDataTable $table
      * @return mixed
      */
-    public function index(GalleryDataTable $table)
+    public function index(GalleryDataTable $table): mixed
     {
         $this->setTitle(__('Gallery List'));
         $this->setBreadcrumbs([
@@ -71,7 +71,7 @@ class GalleryController extends BaseController
      * @param GalleryRequest $request
      * @return RedirectResponse|Redirector
      */
-    public function store(GalleryRequest $request)
+    public function store(GalleryRequest $request): Redirector|RedirectResponse
     {
         $data = array_merge($request->validated(), ['values' => $request->values]);
         $this->repository->create($data);
@@ -100,11 +100,11 @@ class GalleryController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param GalleryRequest $request
      * @return RedirectResponse|Redirector
      */
-    public function update($id, GalleryRequest $request)
+    public function update(int $id, GalleryRequest $request): Redirector|RedirectResponse
     {
         $data = array_merge($request->validated(), ['values' => $request->values]);
         $this->repository->update($data, $id);
@@ -112,10 +112,10 @@ class GalleryController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return ResponseFactory|Response
      */
-    public function destroy($id)
+    public function destroy(int $id): Response|ResponseFactory
     {
         $this->repository->delete($id);
         return response(['status' => true]);

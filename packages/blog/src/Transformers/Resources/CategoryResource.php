@@ -1,8 +1,8 @@
 <?php
 
-namespace Messi\Blog\Http\Resources;
+namespace Messi\Blog\Transformers\Resources;
 
-use Messi\Base\Http\Resources\BaseResource;
+use Messi\Base\Transformers\Resources\BaseResource;
 
 /**
  * @OA\Schema(

@@ -12,7 +12,8 @@
         "laravel/framework": "^9.11",
         "laravel/tinker": "^2.7",
         "messi/blog": "dev-main",
-        "messi/core": "dev-main"
+        "messi/core": "dev-main",
+        "mustache/mustache": "^2.14"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

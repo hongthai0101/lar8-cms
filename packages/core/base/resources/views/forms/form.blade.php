@@ -36,7 +36,6 @@
     @if ($showEnd)
         {!! Form::close() !!}
     @endif
-
 @stop
 @if ($form->getValidatorClass())
     @push('javascript')

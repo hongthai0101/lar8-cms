@@ -1,7 +1,6 @@
 <?php
 namespace Messi\Base\Traits;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Messi\Base\Models\MetaBox as Eloquent;
@@ -9,7 +8,7 @@ use Messi\Base\Repositories\Contracts\MetaBoxRepository;
 
 trait MetaBox
 {
-    private static $metaSeo = 'seo';
+    private static string $metaSeo = 'seo';
 
     protected static function bootMetaBox(): void
     {

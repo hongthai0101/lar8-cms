@@ -4,7 +4,6 @@ namespace Messi\Blog\Providers;
 
 
 use Exception;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 use Messi\Base\Traits\LoadPublishServiceTrait;
 use Messi\Blog\Http\ViewComposers\SidebarViewComposer;
@@ -47,7 +46,7 @@ class BlogServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
+    public function provides(): array
     {
 
     }

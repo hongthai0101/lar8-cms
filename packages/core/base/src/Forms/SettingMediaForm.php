@@ -18,7 +18,6 @@ class SettingMediaForm extends FormAbstract
         $this
             ->setupModel(new Setting())
             ->setMethod('PUT')
-            ->setCancelUrl(route('admin.settings.media'))
             ->setFormOption('url', route('admin.settings.update'))
             ->addCustomField('mediaImage', MediaImageField::class)
             ->addCustomField('onOff', OnOffField::class)

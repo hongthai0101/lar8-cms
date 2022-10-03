@@ -68,8 +68,7 @@ class PostForm extends FormAbstract
                 'label_attr' => ['class' => 'control-label'],
                 'attr'       => [
                     'rows'            => 4,
-                    'placeholder'     => __('Content'),
-                    'with-short-code' => true,
+                    'placeholder'     => __('Content')
                 ],
             ])
             ->add('status', 'customSelect', [

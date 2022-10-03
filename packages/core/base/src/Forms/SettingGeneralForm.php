@@ -17,7 +17,6 @@ class SettingGeneralForm extends FormAbstract
         $this
             ->setupModel(new Setting())
             ->setMethod('PUT')
-            ->setCancelUrl(route('admin.settings.general'))
             ->setFormOption('url', route('admin.settings.update'))
             ->addCustomField('mediaImage', MediaImageField::class)
             ->setValidatorClass(SettingRequest::class)

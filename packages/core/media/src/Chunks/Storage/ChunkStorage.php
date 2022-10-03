@@ -6,9 +6,7 @@ use Messi\Media\Chunks\ChunkFile;
 use Closure;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Collection;
-use League\Flysystem\Adapter\Local;
 use League\Flysystem\Local\LocalFilesystemAdapter;
-use League\Flysystem\FilesystemInterface;
 use RuntimeException;
 use Storage;
 
@@ -29,9 +27,9 @@ class ChunkStorage
     protected FilesystemAdapter $disk;
 
     /**
-     * @var Local | LocalFilesystemAdapter
+     * @var  mixed
      */
-    protected Local | LocalFilesystemAdapter $diskAdapter;
+    protected mixed $diskAdapter;
 
     /**
      * Is provided disk a local drive.
@@ -39,11 +37,6 @@ class ChunkStorage
      * @var bool
      */
     protected bool $isLocalDisk;
-
-    /**
-     * @var bool
-     */
-    protected bool $usingDeprecatedLaravel;
 
     /**
      * ChunkStorage constructor.
@@ -55,39 +48,21 @@ class ChunkStorage
         // Cache the storage path
         $this->disk = Storage::disk($this->config['storage']['disk']);
 
-        $this->usingDeprecatedLaravel = class_exists(LocalFilesystemAdapter::class) === false;
-        if ($this->usingDeprecatedLaravel === false) {
-
-            // try to get the adapter
-            if (!method_exists($this->disk, 'getAdapter')) {
-                throw new RuntimeException('FileSystem driver must have an adapter implemented');
-            }
-
-            // get the disk adapter
-            $this->diskAdapter = $this->disk->getAdapter();
-
-            // check if its local adapter
-            $this->isLocalDisk = $this->diskAdapter instanceof LocalFilesystemAdapter;
-        } else {
-            $driver = $this->driver();
-
-            // try to get the adapter
-            if (!method_exists($driver, 'getAdapter')) {
-                throw new RuntimeException('FileSystem driver must have an adapter implemented');
-            }
-
-            // get the disk adapter
-            $this->diskAdapter = $driver->getAdapter();
-
-            // check if its local adapter
-            $this->isLocalDisk = $this->diskAdapter instanceof Local;
+        // try to get the adapter
+        if (!method_exists($this->disk, 'getAdapter')) {
+            throw new RuntimeException('FileSystem driver must have an adapter implemented');
         }
+
+        // get the disk adapter
+        $this->diskAdapter = $this->disk->getAdapter();
+
+        // check if its local adapter
+        $this->isLocalDisk = $this->diskAdapter instanceof LocalFilesystemAdapter;
     }
 
     /**
      * Returns the driver.
      *
-     * @return FilesystemInterface
      */
     public function driver()
     {
@@ -121,10 +96,6 @@ class ChunkStorage
      */
     public function getDiskPathPrefix(): string
     {
-        if ($this->usingDeprecatedLaravel === true && $this->isLocalDisk) {
-            return $this->diskAdapter->getPathPrefix();
-        }
-
         if ($this->isLocalDisk) {
             return $this->disk->path('');
         }
